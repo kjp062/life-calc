@@ -1,0 +1,749 @@
+{
+  "tiers": {
+    "ahead": {
+      "20s": {
+        "headline": "You're ahead of schedule — now design the life you actually want",
+        "levers": [
+          {
+            "id": "consider-early-retirement-target",
+            "label": "Explore an earlier retirement date",
+            "detail": "With a strong trajectory in your 20s, retiring at 55 instead of 65 may already be within reach. Every additional year of savings at this stage adds roughly 10–15% more to your ending balance due to the extra compounding runway. Run the numbers — you might have more flexibility than you think.",
+            "impact": "high",
+            "effort": "low"
+          },
+          {
+            "id": "max-tax-advantaged-accounts",
+            "label": "Lock in tax-advantaged space every year",
+            "detail": "The 401k limit is $23,000/year and the IRA limit is $7,000/year. Money in these accounts compounds without tax drag. At 25, maxing both for 40 years at 7% real returns adds roughly $1.1M more than taxable investing — just from the tax shelter effect alone.",
+            "impact": "high",
+            "effort": "medium"
+          },
+          {
+            "id": "avoid-lifestyle-inflation",
+            "label": "Be intentional about lifestyle creep",
+            "detail": "Every $500/month you choose not to inflate your lifestyle is $500 more working for you. At 25, an extra $500/month invested compounds to roughly $1.3M by 65. The goal isn't deprivation — it's being deliberate about what you actually spend on versus what's just ambient drift.",
+            "impact": "high",
+            "effort": "medium"
+          },
+          {
+            "id": "open-hsa-triple-advantage",
+            "label": "Use an HSA as a stealth retirement account",
+            "detail": "If you have a high-deductible health plan, an HSA lets you contribute $4,150/year (single) or $8,300/year (family), invest it, and withdraw tax-free for medical expenses — now or in retirement. After 65, you can withdraw for anything, making it effectively a second IRA. Triple tax advantage: deductible in, grows tax-free, out tax-free for medical.",
+            "impact": "medium",
+            "effort": "low"
+          },
+          {
+            "id": "consider-geographic-flexibility",
+            "label": "Keep your future geography options open",
+            "detail": "Being open to living in a lower-cost area in retirement — or even internationally — can dramatically reduce your target number. A $5,000/month lifestyle in San Francisco might cost $2,500 in Portugal or Medellín. This isn't a sacrifice; many people report higher quality of life. Just keeping this option on the table changes your math.",
+            "impact": "medium",
+            "effort": "low"
+          }
+        ]
+      },
+      "30s": {
+        "headline": "You're ahead — now think about what more time and money makes possible",
+        "levers": [
+          {
+            "id": "model-earlier-retirement",
+            "label": "Run the numbers on retiring 5 years early",
+            "detail": "At 35 and ahead of target, retiring at 55 instead of 60 may be realistic. The key variable is healthcare before Medicare at 65 — budget $800–$1,500/month per person for marketplace coverage during that gap. That's a solvable problem, not a dealbreaker.",
+            "impact": "high",
+            "effort": "low"
+          },
+          {
+            "id": "max-tax-advantaged-accounts",
+            "label": "Max out your 401k and IRA every year",
+            "detail": "At $23,000/year in a 401k plus $7,000 in an IRA, you're sheltering $30,000 from taxes annually. Over 25 years at 7% real returns, that's approximately $1.9M — and you've kept years of compound growth out of the IRS's hands. If your employer matches, that's additional free money that many people leave on the table.",
+            "impact": "high",
+            "effort": "medium"
+          },
+          {
+            "id": "explore-part-time-or-sabbatical",
+            "label": "Consider what partial retirement could look like",
+            "detail": "Being ahead in your 30s gives you the option of taking sabbaticals, working part-time, or pivoting to lower-paying but more meaningful work without derailing your retirement. Even a year off at 38 only sets your retirement back slightly if your foundation is solid.",
+            "impact": "medium",
+            "effort": "medium"
+          },
+          {
+            "id": "reduce-fee-drag",
+            "label": "Audit your investment fees",
+            "detail": "A 1% annual fee difference on a $300,000 portfolio costs roughly $180,000 over 25 years at 7% returns. If you're in actively managed funds with expense ratios above 0.5%, moving to low-cost index funds (0.03–0.1% expense ratios) is one of the highest-return-per-minute tasks you can do.",
+            "impact": "medium",
+            "effort": "low"
+          }
+        ]
+      },
+      "40s": {
+        "headline": "You're ahead — now optimize and protect what you've built",
+        "levers": [
+          {
+            "id": "model-earlier-retirement",
+            "label": "Seriously model an earlier retirement date",
+            "detail": "If you're ahead at 45, retiring at 58 instead of 65 may be achievable. The bridge between early retirement and Social Security eligibility (62) and Medicare (65) is the main planning challenge — but with a strong base, that gap is bridgeable. Many people in this position work part-time or consult rather than fully stopping.",
+            "impact": "high",
+            "effort": "low"
+          },
+          {
+            "id": "reduce-fee-drag",
+            "label": "Audit every investment account for fee drag",
+            "detail": "At 45 with a solid portfolio, fees matter enormously. A 0.8% difference in annual fees on $500,000 costs you roughly $230,000 over 20 years at 7% returns. Check expense ratios on all mutual funds and consider consolidating into a low-cost brokerage with index funds. This is free money you're currently giving away.",
+            "impact": "high",
+            "effort": "low"
+          },
+          {
+            "id": "plan-social-security-timing",
+            "label": "Start thinking about Social Security timing",
+            "detail": "Claiming Social Security at 70 versus 62 increases your monthly benefit by roughly 76%. If you can afford to delay — drawing from savings first — the higher guaranteed income reduces the amount you need from investments. For a couple, coordinating who claims when can add $100,000+ in lifetime benefits.",
+            "impact": "high",
+            "effort": "low"
+          },
+          {
+            "id": "explore-part-time-or-sabbatical",
+            "label": "Explore what 'enough' work looks like",
+            "detail": "Being ahead gives you the real option of stepping back — to consulting, part-time, or a passion project — without financial risk. Even reducing to 80% of your current income while working 3 days a week changes what the next 15 years feel like. This is a life design question, not just a financial one.",
+            "impact": "medium",
+            "effort": "medium"
+          }
+        ]
+      },
+      "50s": {
+        "headline": "You're ahead — the finish line is close, and you have real choices now",
+        "levers": [
+          {
+            "id": "plan-social-security-timing",
+            "label": "Optimize your Social Security claiming strategy",
+            "detail": "Every year you delay claiming Social Security past 62 adds roughly 8% to your annual benefit. Claiming at 70 instead of 62 gives you 76% more per month — for life. If you're in good health, delaying is often the highest-returning 'investment' available. A financial planner can help model the breakeven point for your specific situation.",
+            "impact": "high",
+            "effort": "low"
+          },
+          {
+            "id": "plan-healthcare-bridge",
+            "label": "Plan your healthcare bridge to Medicare",
+            "detail": "Healthcare is the biggest wildcard for early retirees. ACA marketplace plans run $800–$1,500/month per person before Medicare kicks in at 65. If you retire at 60, that's 5 years of healthcare costs to plan for. The good news: your income in early retirement can be managed to qualify for significant ACA subsidies.",
+            "impact": "high",
+            "effort": "medium"
+          },
+          {
+            "id": "catch-up-contributions",
+            "label": "Use catch-up contributions to top off accounts",
+            "detail": "After 50, you can contribute an extra $7,500/year to your 401k (total $30,500) and an extra $1,000 to your IRA (total $8,000). Over 10 years at 7% returns, those extra contributions add roughly $104,000 to your balance. Even if you don't need them, they reduce your taxable income now.",
+            "impact": "medium",
+            "effort": "low"
+          },
+          {
+            "id": "consider-earlier-retirement",
+            "label": "Model what retiring in the next 2–5 years looks like",
+            "detail": "If you're ahead in your 50s, full retirement sooner than planned may already be feasible. The math to check: can your expected spending be covered at 4% withdrawal from your projected balance at your target date? If yes, you have more flexibility than you're probably giving yourself credit for.",
+            "impact": "high",
+            "effort": "low"
+          }
+        ]
+      },
+      "60+": {
+        "headline": "You've won — now it's about sequencing, not saving",
+        "levers": [
+          {
+            "id": "plan-social-security-timing",
+            "label": "Be strategic about when you claim Social Security",
+            "detail": "If you can afford to delay, waiting to claim at 70 instead of 62 raises your monthly benefit by 76% — permanently. For a couple, a common strategy is for the lower earner to claim early while the higher earner delays, maximizing the larger survivor benefit. This is worth running the numbers on carefully.",
+            "impact": "high",
+            "effort": "low"
+          },
+          {
+            "id": "manage-sequence-of-returns",
+            "label": "Build a cash buffer to protect against bad early returns",
+            "detail": "The first 5–10 years of retirement are when sequence-of-returns risk is highest — a market downturn early can permanently reduce your portfolio. Holding 1–2 years of expenses in cash or short-term bonds lets you avoid selling equities at a loss during downturns. This isn't about being conservative — it's about protecting your compounding.",
+            "impact": "high",
+            "effort": "low"
+          },
+          {
+            "id": "plan-rmd-strategy",
+            "label": "Plan for Required Minimum Distributions",
+            "detail": "Starting at age 73, the IRS requires you to withdraw minimum amounts from traditional retirement accounts each year. If your balances are large, RMDs can push you into higher tax brackets. Consider doing Roth conversions now (while you're in a lower bracket) to reduce future RMDs and create more tax-free income in retirement.",
+            "impact": "medium",
+            "effort": "medium"
+          },
+          {
+            "id": "consider-geographic-arbitrage",
+            "label": "Keep geographic flexibility as a real option",
+            "detail": "Living in a lower cost-of-living area — whether a different U.S. state or abroad — can let your savings last decades longer. A $60,000/year lifestyle in a high-cost city might be achievable for $35,000/year in the right location. This option gets more powerful when you're no longer tied to a job location.",
+            "impact": "high",
+            "effort": "medium"
+          }
+        ]
+      }
+    },
+    "on-track": {
+      "20s": {
+        "headline": "You're on track — stay the course and let compounding do the work",
+        "levers": [
+          {
+            "id": "increase-savings-rate-modestly",
+            "label": "Nudge your savings rate up by 2–3%",
+            "detail": "If you're currently saving 10% of income, going to 12–13% likely doesn't feel like a big lifestyle change — but at 25, it can add $150,000–$250,000 to your retirement balance by 65. Try automating a small increase with each raise so it happens before you adjust to the new income.",
+            "impact": "high",
+            "effort": "low"
+          },
+          {
+            "id": "max-tax-advantaged-accounts",
+            "label": "Prioritize filling tax-advantaged accounts first",
+            "detail": "The order matters: first get any employer 401k match (free money), then max your IRA ($7,000/year), then fill the rest of your 401k. This sequence alone can add hundreds of thousands compared to saving in taxable accounts, purely through tax efficiency.",
+            "impact": "high",
+            "effort": "low"
+          },
+          {
+            "id": "avoid-lifestyle-inflation",
+            "label": "When income grows, save more before spending more",
+            "detail": "The moment a raise hits is the highest-leverage moment in your financial life. If you save 50% of every raise rather than spending it, your lifestyle grows slowly and your savings rate climbs fast. On a $70k salary growing to $90k over 5 years, this approach can add $300,000+ to your retirement balance.",
+            "impact": "high",
+            "effort": "medium"
+          },
+          {
+            "id": "open-hsa-triple-advantage",
+            "label": "Open an HSA if you're eligible",
+            "detail": "An HSA is the only account in the tax code that's triple tax-advantaged: you deduct contributions, grow investments tax-free, and withdraw tax-free for medical expenses. At 25, investing your HSA rather than spending it gives you a powerful supplemental retirement account that's especially valuable since healthcare in retirement is a major cost.",
+            "impact": "medium",
+            "effort": "low"
+          }
+        ]
+      },
+      "30s": {
+        "headline": "You're on track — a few intentional moves keep the momentum strong",
+        "levers": [
+          {
+            "id": "increase-savings-rate-modestly",
+            "label": "Raise your savings rate by 1–2% per year",
+            "detail": "At 33 with 30 years until retirement, increasing your savings by just 2% of income ($100–$200/month for most people) can add $180,000–$360,000 to your ending balance. Tie each increase to your annual review — it becomes painless when it's systematic.",
+            "impact": "high",
+            "effort": "low"
+          },
+          {
+            "id": "max-tax-advantaged-accounts",
+            "label": "Work toward maxing your 401k and IRA",
+            "detail": "If you're not yet at $23,000 in your 401k and $7,000 in your IRA, those are the clearest levers available. Employer matches alone — typically 3–6% of salary — can add $2,000–$5,000/year in free money that many people leave on the table. Make sure you're at least capturing the full match.",
+            "impact": "high",
+            "effort": "medium"
+          },
+          {
+            "id": "avoid-lifestyle-inflation",
+            "label": "Hold the line on lifestyle as your career grows",
+            "detail": "Your 30s are when salaries often jump — promotions, job switches, dual incomes. Each jump is a fork: spend the increase or bank it. Families that keep their fixed costs flat while income grows reach financial independence a decade earlier than those who scale spending with income, even with similar salaries.",
+            "impact": "high",
+            "effort": "medium"
+          },
+          {
+            "id": "pay-off-high-interest-debt",
+            "label": "Clear high-interest debt to free up savings capacity",
+            "detail": "Paying off debt at 7%+ interest is a guaranteed 7%+ return — better than most investment scenarios. If you have credit card debt or high-rate personal loans, every extra dollar toward principal frees up cash flow permanently. A $10,000 credit card at 18% APR costs $1,800/year in interest alone.",
+            "impact": "high",
+            "effort": "medium"
+          }
+        ]
+      },
+      "40s": {
+        "headline": "You're on track — peak earning years are here, so make them count",
+        "levers": [
+          {
+            "id": "max-tax-advantaged-accounts",
+            "label": "Max out every tax-advantaged account available",
+            "detail": "In your 40s, hitting $23,000 in a 401k and $7,000 in an IRA should be a firm goal. If your employer offers an HSA, add up to $8,300/year for a family. These accounts don't just defer taxes — they change what $1 of savings actually buys you compared to taxable investing.",
+            "impact": "high",
+            "effort": "medium"
+          },
+          {
+            "id": "reduce-fee-drag",
+            "label": "Cut investment fees — they compound against you",
+            "detail": "A 1% annual fee difference on a $400,000 portfolio costs roughly $220,000 over 20 years at 7% returns. If any of your funds have expense ratios above 0.5%, consider switching to low-cost index funds. This one-time audit can add as much value as years of additional contributions.",
+            "impact": "high",
+            "effort": "low"
+          },
+          {
+            "id": "evaluate-retirement-age",
+            "label": "Consider working 1–2 extra years as insurance",
+            "detail": "At 40–45, each additional year you work has outsized impact: you add contributions, you don't draw down, and your portfolio compounds longer. Working until 62 instead of 60 can increase your ending balance by 15–25% and significantly reduces the risk of running short. If you enjoy your work, this is the lowest-effort lever.",
+            "impact": "high",
+            "effort": "low"
+          },
+          {
+            "id": "pay-off-high-interest-debt",
+            "label": "Eliminate high-interest debt before your 50s",
+            "detail": "If you carry any debt above 6–7% interest, prioritize paying it off before you hit your 50s. Entering your final savings decade debt-free maximizes how much of your income you can direct toward retirement. A $20,000 balance at 8% APR is costing you $1,600/year that could instead be compounding.",
+            "impact": "medium",
+            "effort": "medium"
+          }
+        ]
+      },
+      "50s": {
+        "headline": "You're on track — now's the time to protect your position and fine-tune",
+        "levers": [
+          {
+            "id": "catch-up-contributions",
+            "label": "Use catch-up contributions to accelerate your final years",
+            "detail": "After 50, the IRS lets you contribute an extra $7,500/year to your 401k (total: $30,500) and an extra $1,000 to your IRA (total: $8,000). Over 10 years at 7% returns, those extra contributions add roughly $104,000. It's one of the few genuine gifts in the tax code for people who need it.",
+            "impact": "high",
+            "effort": "low"
+          },
+          {
+            "id": "plan-social-security-timing",
+            "label": "Run the numbers on delaying Social Security",
+            "detail": "Every year you delay Social Security past 62 adds roughly 8% to your annual benefit. Delaying from 62 to 70 increases your monthly check by 76% — permanently and inflation-adjusted. If you can cover expenses from savings during that window, the higher guaranteed income often outperforms any investment alternative.",
+            "impact": "high",
+            "effort": "low"
+          },
+          {
+            "id": "plan-healthcare-bridge",
+            "label": "Build a plan for healthcare before Medicare",
+            "detail": "If you retire before 65, healthcare is the biggest unplanned cost most people encounter. ACA marketplace plans typically run $800–$1,500/month per person. Budget this explicitly into your retirement projection — it's not a surprise if you plan for it. Managing your income in early retirement can also qualify you for meaningful ACA subsidies.",
+            "impact": "high",
+            "effort": "medium"
+          },
+          {
+            "id": "evaluate-retirement-age",
+            "label": "A 1–2 year delay has outsized impact at this stage",
+            "detail": "Working until 67 instead of 65 means 2 more years of contributions, 2 fewer years of drawdown, and potentially a larger Social Security benefit. For many people, this single decision closes a meaningful gap with very little sacrifice — especially if the extra years are at peak earning.",
+            "impact": "high",
+            "effort": "medium"
+          }
+        ]
+      },
+      "60+": {
+        "headline": "You're on track — the last mile is about sequencing, not accumulating",
+        "levers": [
+          {
+            "id": "plan-social-security-timing",
+            "label": "Delay Social Security if at all possible",
+            "detail": "Each year you wait past 62 to claim adds roughly 8% to your benefit. At 60, delaying from 62 to 67 gives you 35% more per month — for life. For most people in good health, this is the highest-returning decision available. Even delaying 1–2 years makes a meaningful difference.",
+            "impact": "high",
+            "effort": "low"
+          },
+          {
+            "id": "manage-sequence-of-returns",
+            "label": "Protect against early retirement market downturns",
+            "detail": "A bad market in your first 3–5 years of retirement is more damaging than a bad market later, because you're selling assets at depressed prices to fund spending. Holding 1–2 years of expenses in cash or short-term bonds creates a buffer — you spend from that during downturns and let equities recover.",
+            "impact": "high",
+            "effort": "low"
+          },
+          {
+            "id": "partial-retirement-bridge",
+            "label": "Consider part-time work as a bridge strategy",
+            "detail": "Working part-time at 62–65 — even earning $20,000–$30,000/year — dramatically reduces the draw on your portfolio and lets you delay Social Security. This bridge approach can add years of financial runway without requiring full-time work. Consulting, seasonal work, or a passion project can serve this role.",
+            "impact": "medium",
+            "effort": "medium"
+          },
+          {
+            "id": "plan-rmd-strategy",
+            "label": "Consider Roth conversions before RMDs kick in",
+            "detail": "Once you stop working but before Social Security and RMDs start, you may be in a lower tax bracket than you'll ever be again. This is a prime window to convert traditional IRA or 401k funds to Roth — paying taxes now at a lower rate to avoid higher taxes (and required withdrawals) later. Each dollar converted is tax-free in retirement.",
+            "impact": "medium",
+            "effort": "medium"
+          }
+        ]
+      }
+    },
+    "slightly-behind": {
+      "20s": {
+        "headline": "You're slightly behind — but at your age, this is very fixable",
+        "levers": [
+          {
+            "id": "increase-savings-rate-aggressively",
+            "label": "Raise your savings rate meaningfully — aim for 15–20%",
+            "detail": "If you're currently saving 8–10%, getting to 15–20% is the most impactful move available to you. At 25, an extra $400/month invested grows to roughly $1M by 65 at 7% real returns. The math at your age is genuinely remarkable — small changes now dwarf large changes later.",
+            "impact": "high",
+            "effort": "medium"
+          },
+          {
+            "id": "max-tax-advantaged-accounts",
+            "label": "Make sure you're capturing every tax advantage",
+            "detail": "First, capture your employer's full 401k match — that's an immediate 50–100% return on your contribution. Then max your IRA ($7,000/year). Tax-sheltered growth over 40 years is worth hundreds of thousands compared to equivalent savings in a taxable account. Don't leave this money on the table.",
+            "impact": "high",
+            "effort": "low"
+          },
+          {
+            "id": "avoid-lifestyle-inflation",
+            "label": "Draw a hard line on lifestyle inflation",
+            "detail": "The biggest trap in your 20s is spending every raise. If you can commit to saving at least half of every salary increase, your savings rate climbs automatically as your career grows — without feeling deprived. This is how people close gaps without dramatic sacrifice.",
+            "impact": "high",
+            "effort": "medium"
+          },
+          {
+            "id": "side-income",
+            "label": "Explore additional income sources",
+            "detail": "An extra $500/month invested consistently from side work — freelancing, consulting, tutoring, or selling something — adds roughly $1.3M over 40 years at 7% returns. Even a temporary boost (2–3 years) at your age creates momentum that compounds for decades.",
+            "impact": "high",
+            "effort": "high"
+          },
+          {
+            "id": "pay-off-high-interest-debt",
+            "label": "Eliminate any high-interest debt holding you back",
+            "detail": "If you're carrying credit card debt at 18–24% APR, paying that off before investing (beyond employer match) is almost always the right call. Paying off a $5,000 credit card balance is a guaranteed 20% return. Once it's gone, redirect that payment to investments immediately.",
+            "impact": "high",
+            "effort": "medium"
+          }
+        ]
+      },
+      "30s": {
+        "headline": "You're slightly behind — a few real changes will close the gap",
+        "levers": [
+          {
+            "id": "increase-savings-rate-aggressively",
+            "label": "Increase your savings rate by 5% or more",
+            "detail": "Going from 8% to 13% savings on a $80,000 salary means saving an extra $333/month. At 35, invested for 30 years, that's roughly $400,000 added to your balance. This is the core lever — everything else is secondary to closing the contribution gap.",
+            "impact": "high",
+            "effort": "medium"
+          },
+          {
+            "id": "avoid-lifestyle-inflation",
+            "label": "Redirect your next raise to savings",
+            "detail": "If you're up for a raise or career move this year, committing to saving 75–100% of the increase (before adjusting your lifestyle) is one of the most powerful moves available. A $10,000 raise redirected entirely to savings adds $10,000/year to contributions — and you'll never miss money you didn't start spending.",
+            "impact": "high",
+            "effort": "medium"
+          },
+          {
+            "id": "reduce-current-spending",
+            "label": "Find $300–$500/month to redirect from spending to saving",
+            "detail": "A specific, targeted spending audit — housing, subscriptions, dining, car — often reveals $300–$500/month that has quietly crept in. Cutting that much and investing it starting at 35 adds roughly $380,000–$630,000 by 65. This isn't about sacrifice; it's about finding money you won't miss.",
+            "impact": "high",
+            "effort": "medium"
+          },
+          {
+            "id": "max-tax-advantaged-accounts",
+            "label": "Max your tax-advantaged space",
+            "detail": "Every dollar you put in a 401k or IRA is a dollar that compounds without tax drag. At $23,000 + $7,000/year and 30 years of runway, this is still a massive lever. If you're not there yet, incrementally increase your contribution rate — most plans let you step up by 1% at a time.",
+            "impact": "high",
+            "effort": "medium"
+          },
+          {
+            "id": "side-income",
+            "label": "Explore additional income for 2–3 years",
+            "detail": "Even a temporary boost of $500–$1,000/month for 3 years — $18,000–$36,000 in total contributions — grows to $120,000–$240,000 over 25 years. If you have a skill that could generate side income, a focused short-term effort can create long-term cushion.",
+            "impact": "medium",
+            "effort": "high"
+          }
+        ]
+      },
+      "40s": {
+        "headline": "You're slightly behind — peak earning years are your biggest opportunity",
+        "levers": [
+          {
+            "id": "max-tax-advantaged-accounts",
+            "label": "Hit the contribution max on every tax-advantaged account",
+            "detail": "At $23,000/year in a 401k and $7,000 in an IRA, you're putting $30,000 away annually in tax-advantaged space. Over 20 years at 7% returns, that's roughly $1.3M. If you're not at max, getting there — even incrementally — is the highest-priority financial task you have right now.",
+            "impact": "high",
+            "effort": "medium"
+          },
+          {
+            "id": "reduce-fee-drag",
+            "label": "Audit your investment fees immediately",
+            "detail": "If your 401k or IRA holds actively managed funds with expense ratios above 0.5%, switching to index funds could recover $100,000+ over 20 years on a $300,000 portfolio. Most people set this up once and forget it. Log in, check the expense ratios, and move to the lowest-cost alternatives available.",
+            "impact": "high",
+            "effort": "low"
+          },
+          {
+            "id": "increase-savings-rate-aggressively",
+            "label": "Push your savings rate higher — especially as debts clear",
+            "detail": "As mortgage paydown accelerates and kids' expenses change, your 40s often bring natural opportunities to redirect cash flow. Each $500/month redirected to savings at 45 adds roughly $240,000 by 65. Every freed-up dollar should have a plan before you can adjust to spending it.",
+            "impact": "high",
+            "effort": "medium"
+          },
+          {
+            "id": "evaluate-retirement-age",
+            "label": "Be honest about working until 67 or 68",
+            "detail": "If you're slightly behind at 45, working until 67–68 instead of 65 can close most of the gap without any lifestyle changes. Each extra year adds contributions, skips a year of drawdown, and may increase your Social Security benefit. This is a real option worth putting on the table.",
+            "impact": "high",
+            "effort": "medium"
+          },
+          {
+            "id": "downsize-housing",
+            "label": "Consider right-sizing your housing",
+            "detail": "Housing is often the single largest line item in a budget. If you're in more house than you need, downsizing now can free up $500–$1,500/month in mortgage, maintenance, and utilities — and potentially unlock equity. That redirected cash flow over 20 years is significant.",
+            "impact": "medium",
+            "effort": "high"
+          }
+        ]
+      },
+      "50s": {
+        "headline": "You're slightly behind — focused action in the next decade makes a real difference",
+        "levers": [
+          {
+            "id": "catch-up-contributions",
+            "label": "Use every dollar of catch-up contribution space",
+            "detail": "After 50, you can put an extra $7,500/year into your 401k and an extra $1,000 into your IRA. Over 10 years at 7% returns, those extra contributions add roughly $104,000. At this stage, there's no excuse not to use this — it's one of the clearest tactical advantages available to you.",
+            "impact": "high",
+            "effort": "low"
+          },
+          {
+            "id": "evaluate-retirement-age",
+            "label": "Push your retirement target to 67–68",
+            "detail": "At 55 with a moderate gap, working 2–3 more years than planned can close most of it. Each year you delay: you add contributions, your portfolio grows without withdrawals, and your Social Security benefit increases. Going from 65 to 67 can improve your retirement outcome by 20–30%.",
+            "impact": "high",
+            "effort": "medium"
+          },
+          {
+            "id": "plan-social-security-timing",
+            "label": "Commit to delaying Social Security to 70 if possible",
+            "detail": "If you can delay Social Security from 62 to 70, your monthly benefit increases by 76% — permanently and inflation-adjusted. The bridge strategy: draw from savings from 62–70, then switch to the higher Social Security income. For someone slightly behind, this can dramatically reduce pressure on your portfolio.",
+            "impact": "high",
+            "effort": "low"
+          },
+          {
+            "id": "reduce-current-spending",
+            "label": "Aggressively audit and cut spending now",
+            "detail": "Every $500/month you reduce spending does two things: it means you need less in retirement (your target shrinks) and it frees up cash to save more now. A $500/month reduction in your retirement spending target lowers your needed nest egg by roughly $150,000. This is a lever that works on both sides of the equation.",
+            "impact": "high",
+            "effort": "medium"
+          },
+          {
+            "id": "plan-healthcare-bridge",
+            "label": "Model your healthcare costs explicitly",
+            "detail": "Healthcare before Medicare at 65 is the most common blind spot for people in their 50s planning early retirement. At $800–$1,500/month per person, a 5-year pre-Medicare window costs $48,000–$90,000 in premiums alone. Build this into your projections explicitly so it's not a surprise.",
+            "impact": "medium",
+            "effort": "medium"
+          }
+        ]
+      },
+      "60+": {
+        "headline": "You're slightly behind — but you still have meaningful options",
+        "levers": [
+          {
+            "id": "plan-social-security-timing",
+            "label": "Delay Social Security — this is your most powerful lever",
+            "detail": "At 60–65, each year you delay claiming Social Security adds roughly 8% to your monthly benefit for life. Going from 62 to 67 increases your benefit by 35%. If you can live on savings for a few years, the permanent increase in guaranteed income is often better than any investment return you'd earn instead.",
+            "impact": "high",
+            "effort": "low"
+          },
+          {
+            "id": "partial-retirement-bridge",
+            "label": "Work part-time rather than stopping fully",
+            "detail": "Earning even $20,000–$30,000/year from part-time work dramatically reduces how much your portfolio needs to cover. At a 4% withdrawal rate, $25,000/year in part-time income is equivalent to having $625,000 more saved. Consulting, seasonal work, or a passion project can play this role.",
+            "impact": "high",
+            "effort": "medium"
+          },
+          {
+            "id": "consider-geographic-arbitrage",
+            "label": "Be open to a lower cost-of-living location",
+            "detail": "Retiring to a state with no income tax, or to a lower-cost city or country, can reduce your annual spending target by $10,000–$30,000/year. At a 4% withdrawal rate, reducing your annual need by $15,000/year is equivalent to having $375,000 more saved. This is a life design choice with genuine financial power.",
+            "impact": "high",
+            "effort": "high"
+          },
+          {
+            "id": "evaluate-retirement-age",
+            "label": "Working 1–2 more years has outsized impact now",
+            "detail": "At 62 with a small gap, working until 64 or 65 has compounding benefits: 2 more years of contributions, 2 fewer years of drawdown, and potentially a larger Social Security benefit. For many people in this window, this single decision closes the gap entirely.",
+            "impact": "high",
+            "effort": "medium"
+          },
+          {
+            "id": "right-size-retirement-spending",
+            "label": "Revisit and right-size your retirement spending target",
+            "detail": "If your spending target was set years ago, it may be worth revisiting. Do you actually need $80,000/year in retirement, or is $65,000 realistic and satisfying? Every $10,000 reduction in annual spending need lowers the required nest egg by $250,000. This isn't about deprivation — it's about being honest about what actually makes you happy.",
+            "impact": "high",
+            "effort": "low"
+          }
+        ]
+      }
+    },
+    "behind": {
+      "20s": {
+        "headline": "You're behind — but you have the one thing money can't buy: time",
+        "levers": [
+          {
+            "id": "dramatically-increase-savings-rate",
+            "label": "Get your savings rate to 20%+ as fast as possible",
+            "detail": "At your age, compounding is your superpower — but only if you feed it. Going from 5% to 20% savings on a $60,000 salary means saving $9,000/year instead of $3,000. That difference, invested for 40 years at 7%, is roughly $1.5M. This is the most important financial decision of your 20s.",
+            "impact": "high",
+            "effort": "high"
+          },
+          {
+            "id": "career-growth-investment",
+            "label": "Invest aggressively in your earning power",
+            "detail": "The fastest way to save more is to earn more. A certification, graduate degree, job switch, or skill investment that raises your salary by $10,000/year and you save 50% of it translates to $5,000/year more in contributions — which becomes roughly $1.3M over 40 years. Your human capital is your biggest asset right now.",
+            "impact": "high",
+            "effort": "high"
+          },
+          {
+            "id": "pay-off-high-interest-debt",
+            "label": "Eliminate high-interest debt urgently",
+            "detail": "Credit card debt at 18–24% is an anchor that prevents you from building wealth. A $10,000 balance at 20% costs $2,000/year in interest — money that could be compounding for you instead. Attack it aggressively (avalanche method: highest rate first), then redirect every freed dollar to savings.",
+            "impact": "high",
+            "effort": "medium"
+          },
+          {
+            "id": "max-tax-advantaged-accounts",
+            "label": "Capture every tax advantage available",
+            "detail": "Even if you can't max your 401k yet, capture the full employer match first — that's a 50–100% instant return. Then open a Roth IRA and contribute what you can ($7,000/year max). Roth is especially powerful in your 20s because your tax rate is likely the lowest it will ever be — you're locking in that low rate permanently.",
+            "impact": "high",
+            "effort": "low"
+          },
+          {
+            "id": "reduce-housing-costs",
+            "label": "Make aggressive housing choices now while flexible",
+            "detail": "Housing is usually the biggest budget item. Renting a room instead of a full apartment, living with roommates, or choosing a lower-cost neighborhood can save $500–$1,500/month — which invested starting at 25 becomes $1.3M–$3.9M by 65. These sacrifices are most sustainable and highest-impact when you're young and flexible.",
+            "impact": "high",
+            "effort": "high"
+          }
+        ]
+      },
+      "30s": {
+        "headline": "You're behind — but your 30s are still when the biggest gains are made",
+        "levers": [
+          {
+            "id": "dramatically-increase-savings-rate",
+            "label": "Make closing the savings gap your top financial priority",
+            "detail": "If you're behind in your 30s, the gap is likely structural — your savings rate is too low relative to your goals. Getting to 20–25% savings may require real trade-offs: housing, car, dining, subscriptions. But at 35, an extra $1,000/month invested for 30 years adds $1.1M. There's still enormous runway here.",
+            "impact": "high",
+            "effort": "high"
+          },
+          {
+            "id": "career-growth-investment",
+            "label": "Prioritize income growth — a raise is the highest-return investment",
+            "detail": "A $15,000 salary increase that you save 70% of adds $10,500/year to your contributions. Invested for 30 years, that's roughly $1.1M. Negotiating aggressively, switching jobs strategically, or investing in a skill upgrade has more leverage than almost any investment return you can engineer.",
+            "impact": "high",
+            "effort": "high"
+          },
+          {
+            "id": "reduce-current-spending",
+            "label": "Do a zero-based budget review",
+            "detail": "Rather than trimming around the edges, do a full zero-based budget: list every expense and justify it from scratch. Most people in this exercise find $500–$1,000/month that's slipped in through subscriptions, dining, unused memberships, and incremental upgrades. Redirected to savings starting at 35, $750/month adds $850,000 by 65.",
+            "impact": "high",
+            "effort": "medium"
+          },
+          {
+            "id": "avoid-lifestyle-inflation",
+            "label": "Freeze your lifestyle and redirect all income growth",
+            "detail": "If your spending is keeping pace with your income, that's the core problem. The goal: keep your monthly expenses flat in real terms while your income grows. Every raise goes to savings, every bonus goes to savings. In 5 years, your savings rate can transform without any feeling of sacrifice.",
+            "impact": "high",
+            "effort": "medium"
+          },
+          {
+            "id": "downsize-housing",
+            "label": "Evaluate whether you're overhoused",
+            "detail": "Housing costs that exceed 25–30% of gross income significantly constrain savings capacity. If you're stretched on housing, downsizing by $500–$800/month in costs frees up real money. Invested from 35 to 65, an extra $600/month becomes roughly $680,000. This is a hard conversation, but often the most impactful one.",
+            "impact": "high",
+            "effort": "high"
+          }
+        ]
+      },
+      "40s": {
+        "headline": "You're behind — this is the decade that will determine your retirement, and you can still change it",
+        "levers": [
+          {
+            "id": "dramatically-increase-savings-rate",
+            "label": "Make a significant, sustained increase to savings rate",
+            "detail": "At 45 and behind, getting to 25–30% savings rate requires real decisions. But the math is still working for you: $1,500/month extra invested for 20 years at 7% adds roughly $790,000. The lever works — you just have to pull it hard enough.",
+            "impact": "high",
+            "effort": "high"
+          },
+          {
+            "id": "evaluate-retirement-age",
+            "label": "Extend your planned retirement age to 67–70",
+            "detail": "Working until 68 instead of 65 doesn't just add 3 years of savings — it also shrinks the retirement period you need to fund and increases your Social Security benefit. For someone behind at 45, this single decision can recalibrate the entire projection. It's worth modeling explicitly.",
+            "impact": "high",
+            "effort": "medium"
+          },
+          {
+            "id": "max-tax-advantaged-accounts",
+            "label": "Max every tax-advantaged account — without exception",
+            "detail": "401k at $23,000/year, IRA at $7,000/year, HSA at $8,300/year if eligible. That's $38,300/year in tax-sheltered contributions. Over 20 years at 7% returns, that's approximately $1.7M — and you're reducing your taxable income every year. This has to be your baseline, not your stretch goal.",
+            "impact": "high",
+            "effort": "medium"
+          },
+          {
+            "id": "reduce-current-spending",
+            "label": "Make real spending cuts, not just adjustments",
+            "detail": "At this stage, trimming subscriptions isn't enough. The question is: what are the 2–3 largest expense categories, and what would it take to reduce each by 20%? Housing, cars, and dining out typically account for 60–70% of most budgets. Reducing total spending by $1,500/month starting at 45 adds roughly $790,000 by 65.",
+            "impact": "high",
+            "effort": "high"
+          },
+          {
+            "id": "side-income",
+            "label": "Build a meaningful income supplement",
+            "detail": "An extra $1,000/month from consulting, freelancing, or a side business — invested for 20 years — adds roughly $520,000 to your retirement balance. More than the money itself, it gives you optionality: you might not need to fully retire at 65 if you enjoy the work and it keeps paying.",
+            "impact": "high",
+            "effort": "high"
+          }
+        ]
+      },
+      "50s": {
+        "headline": "You're behind — the options are harder, but they're real and within your control",
+        "levers": [
+          {
+            "id": "catch-up-contributions",
+            "label": "Maximize catch-up contributions every year without fail",
+            "detail": "After 50, you can contribute $30,500/year to your 401k and $8,000 to your IRA. If you can max both, that's $38,500/year in tax-advantaged savings. Over 10 years at 7% returns, that compounds to roughly $535,000. This is the most important mechanical lever available to you right now.",
+            "impact": "high",
+            "effort": "medium"
+          },
+          {
+            "id": "evaluate-retirement-age",
+            "label": "Plan to work until 68–70 and treat it as a strategy, not a defeat",
+            "detail": "Working until 70 instead of 65 is genuinely powerful: 5 more years of maximum contributions, 5 fewer years of drawdown, and the maximum Social Security benefit. For someone behind at 55, this is often the single decision that most changes the outcome. Frame it as buying the retirement you want, not missing the one you planned.",
+            "impact": "high",
+            "effort": "medium"
+          },
+          {
+            "id": "plan-social-security-timing",
+            "label": "Commit to claiming Social Security at 70",
+            "detail": "Delaying Social Security from 62 to 70 increases your monthly benefit by 76% — permanently and inflation-adjusted. For someone behind, the higher guaranteed income directly reduces portfolio dependency. The bridge: use savings from 62–70, then let Social Security cover a larger base. This strategy often beats any market return you'd expect.",
+            "impact": "high",
+            "effort": "low"
+          },
+          {
+            "id": "right-size-retirement-spending",
+            "label": "Honestly revisit what you actually need in retirement",
+            "detail": "Every $10,000 reduction in annual retirement spending lowers your required nest egg by $250,000 (at 4% withdrawal). If your target was set based on your current lifestyle, it may include things that won't matter in retirement — commuting costs, work clothes, meals out for convenience. A thoughtful reduction in the target number can be as powerful as years of additional saving.",
+            "impact": "high",
+            "effort": "low"
+          },
+          {
+            "id": "consider-geographic-arbitrage",
+            "label": "Seriously consider retiring to a lower cost-of-living area",
+            "detail": "Retiring to a lower-cost state or country isn't a consolation prize — many people report it as a genuine quality-of-life upgrade. A $60,000 lifestyle in a high-cost metro can often be replicated for $35,000–$40,000 elsewhere. At 4% withdrawal, that difference in spending target is equivalent to having $500,000–$625,000 more saved.",
+            "impact": "high",
+            "effort": "high"
+          }
+        ]
+      },
+      "60+": {
+        "headline": "You're behind — these are real, honest options that can still change your trajectory",
+        "levers": [
+          {
+            "id": "plan-social-security-timing",
+            "label": "Delay Social Security to 70 — this is the most powerful move available",
+            "detail": "Claiming at 70 instead of 62 increases your monthly benefit by 76% — permanently and inflation-adjusted. For someone with a smaller portfolio, high guaranteed Social Security income dramatically reduces retirement risk. If you can bridge expenses through part-time work or savings withdrawals for a few years, the higher benefit pays back quickly and protects you for life.",
+            "impact": "high",
+            "effort": "low"
+          },
+          {
+            "id": "partial-retirement-bridge",
+            "label": "Plan a 3–5 year part-time bridge before full retirement",
+            "detail": "Fully stopping work at 62 with a portfolio gap is the highest-risk path. Working part-time — even $25,000–$35,000/year — for 3–5 more years lets your portfolio grow, delays Social Security, and dramatically reduces the financial pressure. Many people find this middle path more satisfying than either full work or full retirement.",
+            "impact": "high",
+            "effort": "medium"
+          },
+          {
+            "id": "consider-geographic-arbitrage",
+            "label": "Make geographic arbitrage a serious part of your plan",
+            "detail": "Retiring to a lower cost-of-living location — a smaller U.S. city, a no-income-tax state, or abroad — can reduce annual spending by $15,000–$30,000. At 4% withdrawal, reducing your annual need by $20,000 is equivalent to having $500,000 more in savings. Countries like Portugal, Mexico, and Colombia have large communities of American retirees living well on lower budgets.",
+            "impact": "high",
+            "effort": "high"
+          },
+          {
+            "id": "right-size-retirement-spending",
+            "label": "Build your retirement around what you actually need, not your current lifestyle",
+            "detail": "Retirement expenses are genuinely different from working-years expenses: no commuting costs, no work wardrobe, no daycare, often lower housing needs. A careful, honest retirement budget often comes in 20–30% lower than current spending. Every $10,000 reduction in your annual spending target lowers your required savings by $250,000.",
+            "impact": "high",
+            "effort": "low"
+          },
+          {
+            "id": "manage-sequence-of-returns",
+            "label": "Protect every dollar from sequence-of-returns risk",
+            "detail": "With a smaller portfolio, a bad early market is especially dangerous — you're selling assets at low prices to fund living expenses, making recovery much harder. Keep 2–3 years of expenses in cash or short-term bonds as a buffer. Spend that during down markets; let equities recover. This simple structure prevents the most common way small portfolios unravel.",
+            "impact": "high",
+            "effort": "low"
+          }
+        ]
+      }
+    }
+  }
+}

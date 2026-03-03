@@ -1,35 +1,35 @@
 # Life Calculator — Project Context
 
 ## What We're Building
-A personal finance projection web app that helps people understand their current financial situation and what options they have to craft a life aligned with their desires. 
+A personal finance projection web app that helps people understand their current financial situation and what options they have to craft a life aligned with their desires.
 Built with Next.js, deployed on Vercel.
 
 ## Project Status
-Phase 2: Retirement target + savings breakpoints built. Ready for Vercel deployment.
+Phase 5: Dashboard layout, gap analysis with levers, URL save/share, and green palette complete. Ready for Vercel deployment.
 
 ## Three Agents
 
 ### The Developer
-Responsible for implementation. Writes clean, readable code. 
-Explains what it builds in plain English after each task. 
-Prioritizes working software over perfect software. 
+Responsible for implementation. Writes clean, readable code.
+Explains what it builds in plain English after each task.
+Prioritizes working software over perfect software.
 Never builds more than what was asked.
 
 ### The Designer
-Responsible for how the app looks and feels. Prioritizes clarity 
-and simplicity over complexity. Uses a clean, modern aesthetic. 
-References the design principle: the app should feel calm and 
+Responsible for how the app looks and feels. Prioritizes clarity
+and simplicity over complexity. Uses a clean, modern aesthetic.
+References the design principle: the app should feel calm and
 empowering, not anxiety-inducing. Typography and whitespace matter.
 Inspired by the personal finance app Monarch.
 
 ### The Executive Partner
-Responsible for product decisions. Asks clarifying questions before 
-building. Challenges scope creep. Keeps the project moving toward 
-the definition of done. Flags when something is nice-to-have versus 
+Responsible for product decisions. Asks clarifying questions before
+building. Challenges scope creep. Keeps the project moving toward
+the definition of done. Flags when something is nice-to-have versus
 necessary.
 
 ## Technical Stack
-- Framework: Next.js
+- Framework: Next.js 15 (App Router)
 - Deployment: Vercel
 - Styling: Tailwind CSS
 - Charts: Recharts
@@ -42,38 +42,54 @@ A publicly accessible web app at a real URL that anyone can use.
 - Outputs should feel personal, not generic
 - Simple inputs, meaningful outputs
 - Mobile friendly
-
-## Current Phase Goals
-[x] Repository set up
-[x] CLAUDE.md established
-[x] Skeleton app deployed to Vercel
-[x] Three agents defined
+- Accent color: emerald (green)
 
 ## Features Built
 
-### Savings Projection (Iteration 1 — MVP)
-[x] Inputs: current age, current savings, monthly savings, annual raise rate
+### Savings Projection
+[x] Inputs: current age, current savings, monthly savings, annual salary increase (nominal → real)
 [x] Up to 3 salary change breakpoints (age, new monthly savings, new raise rate)
-[x] Projects portfolio value at age 59 and age 65
-[x] Three return scenarios: 8%, 9%, 10% nominal (assumes 3% inflation)
-[x] Line chart (Recharts) showing growth over time with reference lines at 59 and 65
-[x] Summary cards with dollar amounts per scenario
+[x] Projects portfolio value at age 59 and 65 in today's dollars
+[x] Three real return scenarios: 5%, 6%, 7% (≈ 8–10% nominal minus 3% inflation)
+[x] 6% anchored as "historical average"
+[x] Line chart (Recharts) with reference lines at 59 and 65
 
-### Retirement Target (Iteration 2)
+### Retirement Target
 [x] Input: current monthly spending
-[x] Lifestyle inflation selector: Conservative (0.5%), Moderate (1.5%), Aggressive (3%), Custom
-[x] Math: general inflation (3%) + lifestyle inflation compound multiplicatively each year
-[x] Output: target nest egg at age 59 and 65 using 4% withdrawal rule (25x annual spending)
-[x] Shows projected monthly spending at retirement age
+[x] BLS 2022 benchmark shown before entry (by age bracket)
+[x] Lifestyle inflation presets: Conservative (0.5%), Moderate (1.5%), Aggressive (3%), Custom
+[x] Age-aware default preset (BLS-implied)
+[x] Math: spending grows at lifestyle rate only (real terms); 4% withdrawal rule (25x annual spending)
+[x] Target cards at age 59 and 65
+
+### Gap Analysis
+[x] Selectable cards for age 59 / 65 (shown when both available)
+[x] Gap detail: all 3 scenarios vs. target, projected amount + gap per scenario
+[x] Narrative engine: tier + years-away-aware messaging (15yr runway cutoff)
+[x] Levers: 4–5 personalized options per tier × age range (20s/30s/40s/50s/60+)
+[x] Narrative shown before gap detail
+
+### Dashboard Layout
+[x] Two-column grid: lg:grid-cols-[320px_1fr]
+[x] Left panel: sticky inputs (savings + spending), compacted to fit viewport
+[x] Right panel: gap analysis → chart → projection cards → target cards
+[x] Single-column on mobile
+
+### URL Save / Share
+[x] All inputs encoded as URL params on every change (replaceState, no history spam)
+[x] State fully restored from URL on load
+[x] "Copy link to save" button at bottom of left panel with copied confirmation
 
 ### Both sections share age state — entered once in the savings section.
 
 [ ] Deployed to Vercel
 
 ## Key Decisions
-- Nominal returns (8/9/10%) chosen to reflect historical trends; output in future dollars
-- No FIRE or optionality features yet — intentionally scoped out
-- Monthly compounding using standard growing annuity FV formula
+- Real return rates (5/6/7%) used directly in FV formula; nominal salary raises converted to real internally
+- All output values in today's dollars (real terms throughout)
 - 4% withdrawal rule (25x) baked in — not user-configurable
-- Lifestyle inflation is additive on top of 3% general inflation, compounded multiplicatively
-- BLS CEX research complete (2022 data, knowledge cutoff Aug 2025) — saved to research/bls-consumer-expenditure.json
+- Lifestyle inflation compounds only at lifestyle rate (general inflation already stripped)
+- Monthly compounding using standard growing annuity FV formula, chained across breakpoint periods
+- Gap tiers: ≥120% ahead, 100–119% on-track, 75–99% slightly behind, <75% behind
+- Levers data in app/data/levers.json (20 tier×age combinations, generated by financial advisor agent)
+- BLS CEX research (2022) — benchmark data in RetirementTarget.tsx, raw data in research/

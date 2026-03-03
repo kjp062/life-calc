@@ -1,11 +1,11 @@
 'use client';
 
-import { useState, useMemo } from 'react';
+import { useState, useMemo, useEffect } from 'react';
+import { formatDollars } from './Calculator';
 
-const GENERAL_INFLATION = 0.03;
-const WITHDRAWAL_RATE   = 0.04; // 4% rule → 25x multiplier
+export const WITHDRAWAL_RATE = 0.04;
 
-const PRESETS = [
+export const PRESETS = [
   {
     label: 'Conservative',
     rate: 0.005,
@@ -23,33 +23,63 @@ const PRESETS = [
   },
 ];
 
-function formatDollars(value: number): string {
-  return new Intl.NumberFormat('en-US', {
-    style: 'currency',
-    currency: 'USD',
-    maximumFractionDigits: 0,
-  }).format(value);
+// BLS Consumer Expenditure Survey 2022 — monthly spending by age bracket (Table 1300)
+export const BLS_BENCHMARKS: Array<{ maxAge: number; bracket: string; monthly: number }> = [
+  { maxAge: 24,  bracket: 'under 25', monthly: 2704 },
+  { maxAge: 34,  bracket: '25–34',    monthly: 4366 },
+  { maxAge: 44,  bracket: '35–44',    monthly: 5971 },
+  { maxAge: 54,  bracket: '45–54',    monthly: 6429 },
+  { maxAge: 64,  bracket: '55–64',    monthly: 5739 },
+  { maxAge: 74,  bracket: '65–74',    monthly: 4818 },
+  { maxAge: 999, bracket: '75+',      monthly: 3703 },
+];
+
+// BLS-implied real lifestyle growth rate by age
+export function getDefaultPresetIndex(age: number): number {
+  if (age < 35) return 2; // Aggressive ~3% real
+  if (age < 45) return 1; // Moderate  ~1.5% real
+  return 0;               // Conservative ~0.5% real
 }
 
-function projectSpending(
-  monthlySpending: number,
-  lifestyleRate: number,
-  years: number
-): number {
-  // Compound general inflation and lifestyle inflation multiplicatively each year
-  const annualRate = (1 + GENERAL_INFLATION) * (1 + lifestyleRate) - 1;
-  return monthlySpending * Math.pow(1 + annualRate, years);
+export function getBLSBenchmark(age: number) {
+  return BLS_BENCHMARKS.find((b) => age <= b.maxAge) ?? null;
 }
 
-function nestEggTarget(futureMonthlySpending: number): number {
-  return (futureMonthlySpending * 12) / WITHDRAWAL_RATE;
+// In real terms: only apply lifestyle inflation (general inflation is already baked out)
+export function projectSpendingReal(monthlySpending: number, lifestyleRate: number, years: number): number {
+  return monthlySpending * Math.pow(1 + lifestyleRate, years);
 }
 
-export default function RetirementTarget({ age }: { age: number }) {
-  const [monthlySpending, setMonthlySpending] = useState('');
-  const [presetIndex, setPresetIndex]         = useState(1); // default: Moderate
-  const [useCustom, setUseCustom]             = useState(false);
-  const [customRate, setCustomRate]           = useState('');
+export function nestEggTarget(futureRealMonthlySpending: number): number {
+  return (futureRealMonthlySpending * 12) / WITHDRAWAL_RATE;
+}
+
+export type TargetResults = {
+  at59: number | null;
+  at65: number | null;
+};
+
+export default function RetirementTarget({
+  age,
+  onTargetsChange,
+}: {
+  age: number | null;
+  onTargetsChange?: (results: TargetResults) => void;
+}) {
+  const [monthlySpending,  setMonthlySpending]  = useState('');
+  const [presetIndex,      setPresetIndex]      = useState(1);
+  const [useCustom,        setUseCustom]        = useState(false);
+  const [customRate,       setCustomRate]       = useState('');
+  const [userPickedPreset, setUserPickedPreset] = useState(false);
+
+  // Auto-select BLS-informed preset when age becomes available
+  useEffect(() => {
+    if (age !== null && !userPickedPreset) {
+      setPresetIndex(getDefaultPresetIndex(age));
+    }
+  }, [age, userPickedPreset]);
+
+  const benchmark = age !== null ? getBLSBenchmark(age) : null;
 
   const spending = parseFloat(monthlySpending);
   const lifestyleRate = useCustom
@@ -57,35 +87,49 @@ export default function RetirementTarget({ age }: { age: number }) {
     : PRESETS[presetIndex].rate;
 
   const isValid =
+    age !== null &&
     !isNaN(spending) && spending > 0 &&
     !isNaN(lifestyleRate) && lifestyleRate >= 0 && lifestyleRate <= 0.2;
 
-  const totalAnnualRate = isValid
-    ? ((1 + GENERAL_INFLATION) * (1 + lifestyleRate) - 1) * 100
-    : null;
-
   const result59 = useMemo(() => {
-    if (!isValid || age >= 59) return null;
-    const futureMonthly = projectSpending(spending, lifestyleRate, 59 - age);
-    return { futureMonthly, target: nestEggTarget(futureMonthly) };
+    if (!isValid || age === null || age >= 59) return null;
+    const futureReal = projectSpendingReal(spending, lifestyleRate, 59 - age);
+    return { futureReal, target: nestEggTarget(futureReal) };
   }, [isValid, spending, lifestyleRate, age]);
 
   const result65 = useMemo(() => {
-    if (!isValid || age >= 65) return null;
-    const futureMonthly = projectSpending(spending, lifestyleRate, 65 - age);
-    return { futureMonthly, target: nestEggTarget(futureMonthly) };
+    if (!isValid || age === null || age >= 65) return null;
+    const futureReal = projectSpendingReal(spending, lifestyleRate, 65 - age);
+    return { futureReal, target: nestEggTarget(futureReal) };
   }, [isValid, spending, lifestyleRate, age]);
+
+  // Lift targets to parent for gap analysis
+  useEffect(() => {
+    onTargetsChange?.({
+      at59: result59?.target ?? null,
+      at65: result65?.target ?? null,
+    });
+  }, [result59, result65]); // eslint-disable-line react-hooks/exhaustive-deps
+
+  if (age === null) {
+    return <EmptyState message="Enter your age in the savings section above to get started." />;
+  }
 
   return (
     <div className="space-y-6">
-      <div className="bg-white rounded-2xl border border-slate-200 p-8 space-y-7">
+      <div className="bg-white rounded-2xl border border-slate-100 p-8 space-y-7">
 
         {/* Monthly spending input */}
         <div className="space-y-1.5">
           <label className="block text-sm font-medium text-slate-600">
-            Current monthly spending
+            Monthly spending
           </label>
-          <div className="relative max-w-xs">
+          {benchmark && (
+            <p className="text-xs text-slate-400">
+              People aged {benchmark.bracket} typically spend {formatDollars(benchmark.monthly)}/month · BLS 2022
+            </p>
+          )}
+          <div className="relative max-w-xs mt-1">
             <span className="absolute left-3 top-1/2 -translate-y-1/2 text-slate-400 text-sm pointer-events-none">
               $
             </span>
@@ -93,31 +137,41 @@ export default function RetirementTarget({ age }: { age: number }) {
               type="number"
               value={monthlySpending}
               onChange={(e) => setMonthlySpending(e.target.value)}
-              placeholder="5000"
-              className="w-full rounded-lg border border-slate-200 pl-7 pr-4 py-2.5 text-slate-900 placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent text-sm"
+              placeholder={benchmark ? String(benchmark.monthly) : '5000'}
+              className="w-full rounded-lg border border-slate-200 pl-8 pr-4 py-2.5 text-slate-900 placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:border-transparent text-sm"
             />
           </div>
         </div>
 
         {/* Lifestyle inflation selector */}
         <div className="space-y-3">
-          <label className="block text-sm font-medium text-slate-600">
-            Lifestyle inflation
-          </label>
+          <div>
+            <label className="block text-sm font-medium text-slate-600">
+              Lifestyle inflation
+            </label>
+            <p className="text-xs text-slate-400 mt-0.5">
+              How much your real spending grows each year above inflation.
+              {benchmark ? ' Pre-selected based on your age.' : ''}
+            </p>
+          </div>
           <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
             {PRESETS.map((preset, i) => (
               <button
                 key={preset.label}
-                onClick={() => { setPresetIndex(i); setUseCustom(false); }}
+                onClick={() => {
+                  setPresetIndex(i);
+                  setUseCustom(false);
+                  setUserPickedPreset(true);
+                }}
                 className={`rounded-xl border p-4 text-left transition-colors ${
                   !useCustom && presetIndex === i
-                    ? 'border-blue-500 bg-blue-50'
+                    ? 'border-emerald-500 bg-emerald-50'
                     : 'border-slate-200 hover:border-slate-300 bg-white'
                 }`}
               >
                 <div className="text-sm font-semibold text-slate-900">{preset.label}</div>
                 <div className="text-xs font-medium text-slate-400 mt-0.5">
-                  +{preset.rate * 100}% / yr
+                  +{preset.rate * 100}% / yr real
                 </div>
                 <div className="text-xs text-slate-500 mt-1.5 leading-snug">
                   {preset.description}
@@ -126,13 +180,12 @@ export default function RetirementTarget({ age }: { age: number }) {
             ))}
           </div>
 
-          {/* Custom rate option */}
           <div className="flex items-center gap-3">
             <button
-              onClick={() => setUseCustom(true)}
+              onClick={() => { setUseCustom(true); setUserPickedPreset(true); }}
               className={`text-sm px-3 py-1.5 rounded-lg border transition-colors ${
                 useCustom
-                  ? 'border-blue-500 bg-blue-50 text-blue-700'
+                  ? 'border-emerald-500 bg-emerald-50 text-emerald-700'
                   : 'border-slate-200 text-slate-500 hover:border-slate-300'
               }`}
             >
@@ -148,54 +201,25 @@ export default function RetirementTarget({ age }: { age: number }) {
                   step="0.1"
                   min="0"
                   max="20"
-                  className="w-24 rounded-lg border border-slate-200 pl-3 pr-7 py-1.5 text-sm text-slate-900 placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-blue-500"
+                  className="w-24 rounded-lg border border-slate-200 pl-3 pr-7 py-1.5 text-sm text-slate-900 placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-emerald-500"
                 />
-                <span className="absolute right-3 top-1/2 -translate-y-1/2 text-slate-400 text-sm">
-                  %
-                </span>
+                <span className="absolute right-3 top-1/2 -translate-y-1/2 text-slate-400 text-sm">%</span>
               </div>
             )}
           </div>
 
-          {totalAnnualRate !== null && (
+          {isValid && (
             <p className="text-xs text-slate-400">
-              Total spending growth: ~{totalAnnualRate.toFixed(1)}% per year
-              &nbsp;(3% general inflation + {(lifestyleRate * 100).toFixed(1)}% lifestyle)
+              Your spending grows at {(lifestyleRate * 100).toFixed(1)}% per year in real terms (above 3% general inflation).
             </p>
           )}
         </div>
       </div>
 
-      {/* Results */}
-      {isValid && (
-        <>
-          <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
-            {result59 ? (
-              <TargetCard
-                title="Target at age 59"
-                subtitle={`${59 - age} years away`}
-                target={result59.target}
-                futureMonthly={result59.futureMonthly}
-              />
-            ) : (
-              <SkippedCard message="Already past age 59" />
-            )}
-            {result65 ? (
-              <TargetCard
-                title="Target at age 65"
-                subtitle={`${65 - age} years away`}
-                target={result65.target}
-                futureMonthly={result65.futureMonthly}
-              />
-            ) : (
-              <SkippedCard message="Already past age 65" />
-            )}
-          </div>
-
-          <p className="text-xs text-slate-400 text-center pb-4">
-            Target is 25× projected annual spending (4% withdrawal rate). Values in future dollars.
-          </p>
-        </>
+      {isValid ? (
+        <TargetOutputs result59={result59} result65={result65} age={age} />
+      ) : (
+        <EmptyState message="Enter your monthly spending above to see your retirement target." />
       )}
     </div>
   );
@@ -205,15 +229,15 @@ function TargetCard({
   title,
   subtitle,
   target,
-  futureMonthly,
+  futureReal,
 }: {
   title: string;
   subtitle: string;
   target: number;
-  futureMonthly: number;
+  futureReal: number;
 }) {
   return (
-    <div className="bg-white rounded-2xl border border-slate-200 p-8 space-y-3">
+    <div className="bg-white rounded-2xl border border-slate-100 p-8 space-y-3">
       <div>
         <h3 className="text-lg font-semibold text-slate-900">{title}</h3>
         <p className="text-sm text-slate-400">{subtitle}</p>
@@ -222,16 +246,66 @@ function TargetCard({
         {formatDollars(target)}
       </div>
       <p className="text-xs text-slate-400">
-        Covers {formatDollars(futureMonthly)}/month at retirement
+        Covers {formatDollars(futureReal)}/month in today&apos;s dollars
       </p>
+    </div>
+  );
+}
+
+function EmptyState({ message }: { message: string }) {
+  return (
+    <div className="bg-white rounded-2xl border border-slate-100 p-12 flex items-center justify-center">
+      <p className="text-sm text-slate-400 text-center max-w-xs">{message}</p>
     </div>
   );
 }
 
 function SkippedCard({ message }: { message: string }) {
   return (
-    <div className="bg-slate-50 rounded-2xl border border-slate-200 p-8 flex items-center justify-center text-slate-400 text-sm">
+    <div className="bg-slate-50 rounded-2xl border border-slate-100 p-8 flex items-center justify-center text-slate-400 text-sm">
       {message}
     </div>
+  );
+}
+
+export type TargetDetail = { futureReal: number; target: number };
+
+export function TargetOutputs({
+  result59,
+  result65,
+  age,
+}: {
+  result59: TargetDetail | null;
+  result65: TargetDetail | null;
+  age: number;
+}) {
+  return (
+    <>
+      <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
+        {result59 ? (
+          <TargetCard
+            title="Target at age 59"
+            subtitle={`${59 - age} years away · early retirement`}
+            target={result59.target}
+            futureReal={result59.futureReal}
+          />
+        ) : (
+          <SkippedCard message="Already past age 59" />
+        )}
+        {result65 ? (
+          <TargetCard
+            title="Target at age 65"
+            subtitle={`${65 - age} years away · traditional retirement`}
+            target={result65.target}
+            futureReal={result65.futureReal}
+          />
+        ) : (
+          <SkippedCard message="Already past age 65" />
+        )}
+      </div>
+      <p className="text-xs text-slate-400 text-center pb-4">
+        Target is 25× projected annual spending (4% withdrawal rate). All values in today&apos;s dollars.
+      </p>
+    </>
   );
 }

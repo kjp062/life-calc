@@ -3,9 +3,9 @@ import LifeCalculator from './components/LifeCalculator';
 export default function Home() {
   return (
     <main className="min-h-screen px-4 py-16">
-      <div className="w-full max-w-3xl mx-auto space-y-10">
+      <div className="w-full max-w-6xl mx-auto space-y-10">
         <div className="space-y-2">
-          <h1 className="text-4xl font-semibold tracking-tight text-slate-900">
+          <h1 className="text-3xl sm:text-4xl font-semibold tracking-tight text-slate-900">
             Life Calculator
           </h1>
           <p className="text-lg text-slate-500">
