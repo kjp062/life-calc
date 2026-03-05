@@ -64,6 +64,8 @@ export default function LifeCalculator() {
   const [assumptionsOpen, setAssumptionsOpen] = useState(false);
   const [scenariosOpen,   setScenariosOpen]   = useState(false);
   const [copied,          setCopied]          = useState(false);
+  const [cardCollapsed,   setCardCollapsed]   = useState(false);
+  const [mobileInputTab,  setMobileInputTab]  = useState<'situation' | 'assumptions' | 'whatif'>('situation');
   const firstRender = useRef(true);
 
   // ─── Derived: calculator ──────────────────────────────────────────────────────
@@ -307,12 +309,74 @@ export default function LifeCalculator() {
     <div className="space-y-5">
 
       {/* ── Sticky floating input card ──────────────────────────────────────── */}
-      <div className="sticky top-0 z-10 -mx-4 px-4 pt-4 pb-3 bg-[#f0e6d5]">
-        <div className="bg-white rounded-2xl border border-[#d4c4b0] shadow-lg shadow-stone-400/15 p-4 space-y-3">
-          <p className="text-xs font-semibold text-stone-500 uppercase tracking-wide">Your situation</p>
+      <div className="sticky top-0 z-10 -mx-4 px-4 pt-3 pb-2 md:pt-4 md:pb-3 bg-[#f0e6d5]">
+        <div className="bg-white rounded-2xl border border-[#d4c4b0] shadow-lg shadow-stone-400/15 p-3 md:p-4 space-y-2 md:space-y-3">
+          {/* ── Card header (always visible) ─────────────────────────────── */}
+          <div className="flex items-center gap-2">
+            <button
+              onClick={() => setCardCollapsed(!cardCollapsed)}
+              className="sm:hidden flex-shrink-0 text-stone-400 hover:text-stone-600 transition-colors"
+              aria-label={cardCollapsed ? 'Expand inputs' : 'Collapse inputs'}
+            >
+              <span className={`inline-block transition-transform duration-150 text-[10px] ${cardCollapsed ? '' : 'rotate-90'}`}>▶</span>
+            </button>
+            <p className="text-xs font-semibold text-stone-500 uppercase tracking-wide flex-1">Your situation</p>
+            <div className="flex items-center gap-2 sm:gap-3">
+              <div className="flex gap-0.5 sm:gap-1 bg-[#e8d9c5] rounded-xl p-0.5 sm:p-1">
+                <button
+                  onClick={() => setActiveTab('life-plan')}
+                  className={`rounded-lg px-2 sm:px-3 py-1 sm:py-1.5 text-xs sm:text-sm font-medium transition-colors ${
+                    activeTab === 'life-plan'
+                      ? 'bg-white text-stone-900 shadow-sm'
+                      : 'text-stone-500 hover:text-stone-700'
+                  }`}
+                >
+                  Life Plan
+                </button>
+                <button
+                  onClick={() => setActiveTab('details')}
+                  className={`rounded-lg px-2 sm:px-3 py-1 sm:py-1.5 text-xs sm:text-sm font-medium transition-colors ${
+                    activeTab === 'details'
+                      ? 'bg-white text-stone-900 shadow-sm'
+                      : 'text-stone-500 hover:text-stone-700'
+                  }`}
+                >
+                  Details
+                </button>
+              </div>
+              <button
+                onClick={copyLink}
+                className="text-xs text-stone-400 hover:text-stone-600 transition-colors flex items-center gap-1"
+              >
+                {copied ? (
+                  <span className="text-green-600">✓ Saved</span>
+                ) : (
+                  <span>↗ Share</span>
+                )}
+              </button>
+            </div>
+          </div>
+
+          {/* ── Mobile input tab bar ────────────────────────────────────── */}
+          {!cardCollapsed && (
+            <div className="sm:hidden flex bg-[#e8d9c5] rounded-xl p-0.5">
+              {(['situation', 'assumptions', 'whatif'] as const).map((tab) => (
+                <button
+                  key={tab}
+                  onClick={() => setMobileInputTab(tab)}
+                  className={`flex-1 rounded-lg py-1 text-xs font-medium transition-colors ${
+                    mobileInputTab === tab ? 'bg-white text-stone-900 shadow-sm' : 'text-stone-500 hover:text-stone-700'
+                  }`}
+                >
+                  {tab === 'situation' ? 'Situation' : tab === 'assumptions' ? 'Assumptions' : 'What-if'}
+                </button>
+              ))}
+            </div>
+          )}
 
           {/* ── 6-item input grid (2 rows of 3 on desktop) ─────────────────── */}
-          <div className="grid grid-cols-2 sm:grid-cols-3 gap-3">
+          <div className={`sm:block ${(!cardCollapsed && mobileInputTab === 'situation') ? '' : 'hidden'}`}>
+          <div className="grid grid-cols-2 sm:grid-cols-3 gap-2 md:gap-3">
             <Field label="Age">
               <input
                 type="number"
@@ -397,10 +461,10 @@ export default function LifeCalculator() {
               )}
             </Field>
           </div>
+          </div>{/* end input grid wrapper */}
 
-          {/* ── Second row: assumptions + what-if + tabs + copy ────────────── */}
-          <div className="flex flex-col sm:flex-row sm:items-center gap-2 border-t border-[#e8d9c5] pt-3">
-            {/* Two collapsible toggles */}
+          {/* ── Desktop toggles row ─────────────────────────────────────── */}
+          <div className="hidden sm:flex sm:items-center gap-2 border-t border-[#e8d9c5] pt-3">
             <div className="flex items-center gap-2 min-w-0">
               <button
                 onClick={() => setAssumptionsOpen(!assumptionsOpen)}
@@ -436,56 +500,16 @@ export default function LifeCalculator() {
                 )}
               </button>
             </div>
-
-            <div className="flex-1" />
-
-            <div className="flex items-center gap-3">
-              {/* Tab switcher */}
-              <div className="flex gap-1 bg-[#e8d9c5] rounded-xl p-1">
-                <button
-                  onClick={() => setActiveTab('life-plan')}
-                  className={`rounded-lg px-3 py-1.5 text-sm font-medium transition-colors ${
-                    activeTab === 'life-plan'
-                      ? 'bg-white text-stone-900 shadow-sm'
-                      : 'text-stone-500 hover:text-stone-700'
-                  }`}
-                >
-                  Life Plan
-                </button>
-                <button
-                  onClick={() => setActiveTab('details')}
-                  className={`rounded-lg px-3 py-1.5 text-sm font-medium transition-colors ${
-                    activeTab === 'details'
-                      ? 'bg-white text-stone-900 shadow-sm'
-                      : 'text-stone-500 hover:text-stone-700'
-                  }`}
-                >
-                  Details
-                </button>
-              </div>
-
-              {/* Copy link */}
-              <button
-                onClick={copyLink}
-                className="text-xs text-stone-400 hover:text-stone-600 transition-colors flex items-center gap-1"
-              >
-                {copied ? (
-                  <span className="text-green-600">✓ Saved</span>
-                ) : (
-                  <span>↗ Share</span>
-                )}
-              </button>
-            </div>
           </div>
 
           {/* Disclaimer note */}
-          <p className="text-xs text-stone-400 text-center px-1">
+          <p className="hidden sm:block text-xs text-stone-400 text-center px-1">
             Excludes emergency funds, liquid savings, and alternative assets (crypto, etc.).
           </p>
 
-          {/* ── Assumptions drawer ────────────────────────────────────────── */}
-          {assumptionsOpen && (
-            <div className="border-t border-[#e8d9c5] pt-4 space-y-5 max-h-64 overflow-y-auto">
+          {/* ── Assumptions content ────────────────────────────────────────── */}
+          <div className={`${assumptionsOpen ? 'sm:block' : 'sm:hidden'} ${(!cardCollapsed && mobileInputTab === 'assumptions') ? '' : 'hidden'}`}>
+            <div className="sm:border-t sm:border-[#e8d9c5] sm:pt-4 space-y-5 max-h-[50vh] sm:max-h-64 overflow-y-auto">
 
               {/* Return outlook */}
               <div className="space-y-1.5">
@@ -726,11 +750,11 @@ export default function LifeCalculator() {
               </div>
 
             </div>
-          )}
+          </div>
 
-          {/* ── What-if drawer (breakpoints) ──────────────────────────────── */}
-          {scenariosOpen && (
-            <div className="border-t border-[#e8d9c5] pt-4 space-y-2 max-h-64 overflow-y-auto">
+          {/* ── What-if content (breakpoints) ─────────────────────────────── */}
+          <div className={`${scenariosOpen ? 'sm:block' : 'sm:hidden'} ${(!cardCollapsed && mobileInputTab === 'whatif') ? '' : 'hidden'}`}>
+            <div className="sm:border-t sm:border-[#e8d9c5] sm:pt-4 space-y-2 max-h-[50vh] sm:max-h-64 overflow-y-auto">
               <label className="block text-xs font-medium text-stone-500">Planned change in savings</label>
               {breakpoints.length > 0 && (
                 <div className="space-y-3">
@@ -797,7 +821,7 @@ export default function LifeCalculator() {
                 + Add planned change
               </button>
             </div>
-          )}
+          </div>
         </div>
       </div>
 
@@ -860,7 +884,7 @@ export default function LifeCalculator() {
 
 function Field({ label, children }: { label: string; children: React.ReactNode }) {
   return (
-    <div className="space-y-1.5">
+    <div className="space-y-1 md:space-y-1.5">
       {label && <label className="block text-xs font-medium text-stone-500">{label}</label>}
       {children}
     </div>
