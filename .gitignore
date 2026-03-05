@@ -16,3 +16,12 @@ out/
 
 # Claude internal
 .claude/
+
+# Build artifacts
+tsconfig.tsbuildinfo
+
+# Research data (raw, not needed in repo)
+research/
+
+# Product notes (local only)
+ideation.md

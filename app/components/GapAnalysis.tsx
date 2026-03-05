@@ -70,17 +70,17 @@ const TIER_LABEL: Record<Tier, string> = {
 };
 
 const TIER_COLOR: Record<Tier, string> = {
-  'ahead':       'text-emerald-600',
-  'on-track':    'text-emerald-600',
-  'moderate':    'text-amber-600',
-  'significant': 'text-amber-600',
+  'ahead':       'text-green-600',
+  'on-track':    'text-green-600',
+  'moderate':    'text-orange-600',
+  'significant': 'text-orange-600',
 };
 
 const TIER_DOT: Record<Tier, string> = {
-  'ahead':       'bg-emerald-400',
-  'on-track':    'bg-emerald-400',
-  'moderate':    'bg-amber-400',
-  'significant': 'bg-amber-400',
+  'ahead':       'bg-green-500',
+  'on-track':    'bg-green-500',
+  'moderate':    'bg-orange-500',
+  'significant': 'bg-orange-500',
 };
 
 // ─── Lever helpers ────────────────────────────────────────────────────────────
@@ -92,41 +92,61 @@ function tierToLeverTier(tier: Tier): LeverTier {
 }
 
 const IMPACT_BADGE: Record<LeverImpact, string> = {
-  high:   'bg-emerald-50 text-emerald-700',
+  high:   'bg-green-50 text-green-700',
   medium: 'bg-blue-50 text-blue-600',
-  low:    'bg-slate-100 text-slate-500',
+  low:    'bg-stone-100 text-stone-500',
 };
 
 // ─── Main component ───────────────────────────────────────────────────────────
+
+function applyMultiplierToProjections(
+  projections: ScenarioResult[],
+  multiplier: number
+): ScenarioResult[] {
+  return projections.map((p) => ({ ...p, amount: p.amount * multiplier }));
+}
 
 export default function GapAnalysis({
   projections,
   targets,
   age,
+  targetRetAge = 65,
+  afterTaxMultiplier,
+  ssActive,
 }: {
   projections: ProjectionResults;
   targets: TargetResults;
   age: number | null;
+  targetRetAge?: number;
+  afterTaxMultiplier?: number | null;
+  ssActive?: boolean;
 }) {
-  const has59 = projections.at59 !== null && targets.at59 !== null && age !== null;
-  const has65 = projections.at65 !== null && targets.at65 !== null && age !== null;
-  const showToggle = has59 && has65;
+  const has59    = projections.at59 !== null && targets.at59 !== null && age !== null;
+  const hasTarget = projections.at65 !== null && targets.at65 !== null && age !== null;
+  const showToggle = has59 && hasTarget;
 
-  const [selectedAge, setSelectedAge] = useState<59 | 65>(65);
+  // true = viewing age 59 (early), false = viewing target age
+  const [viewEarly, setViewEarly] = useState(false);
 
-  // If selected age loses its data, fall back to whichever is available
-  const activeAge: 59 | 65 =
-    selectedAge === 59 && !has59 ? 65 :
-    selectedAge === 65 && !has65 ? 59 :
-    selectedAge;
+  const activeIsEarly = showToggle && viewEarly;
+  const activeAge         = activeIsEarly ? 59 : targetRetAge;
+  const activeTarget      = activeIsEarly ? targets.at59     : targets.at65;
 
-  const activeProjections = activeAge === 59 ? projections.at59 : projections.at65;
-  const activeTarget      = activeAge === 59 ? targets.at59     : targets.at65;
+  // Apply after-tax multiplier to projections for tier/gap calculations
+  const effectiveAt59 = projections.at59 && afterTaxMultiplier
+    ? applyMultiplierToProjections(projections.at59, afterTaxMultiplier)
+    : projections.at59;
+  const effectiveAt65 = projections.at65 && afterTaxMultiplier
+    ? applyMultiplierToProjections(projections.at65, afterTaxMultiplier)
+    : projections.at65;
+  const effectiveProjections: ProjectionResults = { at59: effectiveAt59, at65: effectiveAt65 };
 
-  if (!has59 && !has65) {
+  const activeProjections = activeIsEarly ? effectiveProjections.at59 : effectiveProjections.at65;
+
+  if (!has59 && !hasTarget) {
     return (
-      <div className="bg-white rounded-2xl border border-slate-100 p-12 flex items-center justify-center">
-        <p className="text-sm text-slate-400 text-center max-w-xs">
+      <div className="bg-white rounded-2xl border border-[#d4c4b0] p-12 flex items-center justify-center">
+        <p className="text-sm text-stone-400 text-center max-w-xs">
           Complete both sections above to see how your savings compare to your retirement target.
         </p>
       </div>
@@ -144,33 +164,34 @@ export default function GapAnalysis({
       {/* Age selectors — only when both targets are available */}
       {showToggle && (
         <div className="grid grid-cols-2 gap-4">
-          {([59, 65] as const).map((retAge) => {
-            const proj  = retAge === 59 ? projections.at59 : projections.at65;
-            const tgt   = retAge === 59 ? targets.at59     : targets.at65;
-            const p6    = proj?.find((p) => p.key === 'rate6');
-            const t     = p6 && tgt ? getTier(p6.amount, tgt) : null;
-            const gap   = p6 && tgt ? p6.amount - tgt : null;
-            const isActive = activeAge === retAge;
+          {([true, false] as const).map((isEarly) => {
+            const proj     = isEarly ? effectiveProjections.at59 : effectiveProjections.at65;
+            const tgt      = isEarly ? targets.at59              : targets.at65;
+            const p6       = proj?.find((p) => p.key === 'rate6');
+            const t        = p6 && tgt ? getTier(p6.amount, tgt) : null;
+            const gap      = p6 && tgt ? p6.amount - tgt : null;
+            const retAge   = isEarly ? 59 : targetRetAge;
+            const isActive = activeIsEarly === isEarly;
 
             return (
               <button
                 key={retAge}
-                onClick={() => setSelectedAge(retAge)}
-                className={`rounded-2xl border p-5 text-left transition-colors ${
+                onClick={() => setViewEarly(isEarly)}
+                className={`rounded-2xl border p-5 text-left transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-green-600 focus-visible:ring-offset-2 ${
                   isActive
-                    ? 'border-emerald-500 bg-emerald-50'
-                    : 'border-slate-200 hover:border-slate-300 bg-white'
+                    ? 'border-green-600 bg-green-50 hover:border-green-500'
+                    : 'border-[#d4c4b0] hover:border-[#b8a090] bg-white'
                 }`}
               >
                 <div className="flex items-center justify-between mb-3">
                   <div>
-                    <p className="text-base font-semibold text-slate-900">Age {retAge}</p>
-                    <p className="text-xs text-slate-400">
-                      {retAge === 59 ? 'Early retirement' : 'Traditional retirement'}
+                    <p className="text-base font-semibold text-stone-900">Age {retAge}</p>
+                    <p className="text-xs text-stone-400">
+                      {isEarly ? 'Early retirement' : targetRetAge === 65 ? 'Traditional retirement' : 'Your target'}
                     </p>
                   </div>
                   {isActive && (
-                    <span className="text-xs font-medium text-emerald-600 bg-emerald-100 px-2 py-0.5 rounded-full">
+                    <span className="text-xs font-medium text-green-700 bg-green-100 px-2 py-0.5 rounded-full">
                       Viewing
                     </span>
                   )}
@@ -181,7 +202,7 @@ export default function GapAnalysis({
                     <span className={`text-xs font-medium ${TIER_COLOR[t]}`}>
                       {TIER_LABEL[t]}
                     </span>
-                    <span className="text-xs text-slate-400">
+                    <span className="text-xs text-stone-400">
                       · {gap >= 0 ? '+' : ''}{formatDollars(gap)} at 6%
                     </span>
                   </div>
@@ -205,9 +226,10 @@ export default function GapAnalysis({
       {activeProjections && activeTarget !== null && (
         <GapDetail
           title={`At age ${activeAge}`}
-          subtitle={`${yearsAway} years away · ${activeAge === 59 ? 'early' : 'traditional'} retirement`}
+          subtitle={`${yearsAway} years away · ${activeIsEarly ? 'early retirement' : targetRetAge === 65 ? 'traditional retirement' : 'target retirement'}`}
           target={activeTarget}
           projections={activeProjections}
+          ssActive={ssActive}
         />
       )}
     </div>
@@ -221,25 +243,33 @@ function GapDetail({
   subtitle,
   target,
   projections,
+  ssActive,
 }: {
   title: string;
   subtitle: string;
   target: number;
   projections: ScenarioResult[];
+  ssActive?: boolean;
 }) {
   return (
-    <div className="bg-white rounded-2xl border border-slate-100 p-8 space-y-5">
+    <div className="bg-white rounded-2xl border border-[#d4c4b0] p-6 space-y-4">
       <div>
-        <h3 className="text-lg font-semibold text-slate-900">{title}</h3>
-        <p className="text-sm text-slate-400">{subtitle}</p>
+        <h3 className="text-lg font-semibold text-stone-900">{title}</h3>
+        <p className="text-sm text-stone-400">{subtitle}</p>
       </div>
 
-      <div className="flex items-baseline gap-2 pb-1">
-        <span className="text-xs text-slate-400 uppercase tracking-wide font-medium">Target</span>
-        <span className="text-xl font-bold text-slate-900">{formatDollars(target)}</span>
+      <div className="pb-3">
+        <div className="flex items-baseline gap-2 flex-wrap">
+          <span className="text-xs text-stone-400 uppercase tracking-wide font-medium">Target</span>
+          {ssActive && (
+            <span className="text-xs font-medium text-green-700 bg-green-100 px-2 py-0.5 rounded-full ml-2">SS adjusted</span>
+          )}
+          <span className="text-xl font-bold text-stone-900 ml-auto">{formatDollars(target)}</span>
+        </div>
+        <p className="text-xs text-stone-400 mt-0.5">Your retirement target at 25× annual spending</p>
       </div>
 
-      <div className="space-y-3 pt-3 border-t border-slate-100">
+      <div className="space-y-3 pt-3 border-t border-[#e8d9c5]">
         {projections.map((p) => {
           const isAnchor = p.key === 'rate6';
           const gap      = p.amount - target;
@@ -248,21 +278,21 @@ function GapDetail({
           return (
             <div
               key={p.key}
-              className={`rounded-lg ${isAnchor ? 'bg-slate-50 px-3 py-2.5 -mx-3' : 'py-0.5'}`}
+              className={`rounded-lg ${isAnchor ? 'bg-[#faf6ef] px-3 py-2.5 -mx-3' : 'py-0.5'}`}
             >
               <div className="flex items-center justify-between">
                 <div className="flex items-center gap-2">
                   <span className="w-2 h-2 rounded-full flex-shrink-0" style={{ backgroundColor: p.color }} />
-                  <span className={`text-sm ${isAnchor ? 'text-slate-700 font-medium' : 'text-slate-500'}`}>
+                  <span className={`text-sm ${isAnchor ? 'text-stone-700 font-medium' : 'text-stone-500'}`}>
                     {p.label} return
                   </span>
-                  {isAnchor && <span className="text-xs text-slate-400">· historical avg</span>}
+                  {isAnchor && <span className="text-xs text-stone-400">· historical avg</span>}
                 </div>
-                <span className={`font-semibold ${isAnchor ? 'text-base' : 'text-sm'} ${isAhead ? 'text-emerald-600' : 'text-amber-600'}`}>
+                <span className={`font-semibold ${isAnchor ? 'text-base' : 'text-sm'} ${isAhead ? 'text-green-600' : 'text-orange-600'}`}>
                   {isAhead ? '+' : ''}{formatDollars(gap)}
                 </span>
               </div>
-              <p className="text-xs text-slate-400 ml-4 mt-0.5">
+              <p className="text-xs text-stone-400 ml-4 mt-0.5">
                 Projected {formatDollars(p.amount)} · {isAhead ? 'on track' : `short by ${formatDollars(Math.abs(gap))}`}
               </p>
             </div>
@@ -284,27 +314,30 @@ function NarrativePanel({
   tier: Tier;
   leverSet: AgeLeverSet | null;
 }) {
+  const bgClass = (tier === 'ahead' || tier === 'on-track')
+    ? 'bg-green-50 border-green-200'
+    : 'bg-orange-50 border-orange-200';
   return (
-    <div className="bg-white rounded-2xl border border-slate-100 p-8 space-y-4">
+    <div className={`rounded-2xl border p-6 space-y-4 ${bgClass}`}>
       <div className="flex items-center gap-2">
         <span className={`w-2 h-2 rounded-full flex-shrink-0 ${TIER_DOT[tier]}`} />
-        <p className="text-lg font-semibold text-slate-900">{narrative.headline}</p>
+        <p className="text-lg font-semibold text-stone-900">{narrative.headline}</p>
       </div>
-      <p className="text-sm text-slate-500 leading-relaxed">{narrative.body}</p>
+      <p className="text-sm text-stone-500 leading-relaxed">{narrative.body}</p>
 
       {leverSet && (
-        <div className="pt-4 mt-2 border-t border-slate-100 space-y-4">
-          <p className="text-xs font-semibold text-slate-400 uppercase tracking-wide">Your options</p>
+        <div className="pt-4 mt-2 border-t border-[#e8d9c5] space-y-4">
+          <p className="text-xs font-semibold text-stone-500 uppercase tracking-wide">Your options</p>
           <div className="space-y-4">
             {leverSet.levers.map((lever) => (
-              <div key={lever.id} className="space-y-1.5 pb-4 border-b border-slate-50 last:border-0 last:pb-0">
+              <div key={lever.id} className="space-y-1.5 pb-4 border-b border-[#e8d9c5] last:border-0 last:pb-0">
                 <div className="flex items-start justify-between gap-3">
-                  <p className="text-sm font-semibold text-slate-800">{lever.label}</p>
+                  <p className="text-sm font-semibold text-stone-800">{lever.label}</p>
                   <span className={`flex-shrink-0 text-xs px-2 py-0.5 rounded-full font-medium ${IMPACT_BADGE[lever.impact]}`}>
                     {lever.impact} impact
                   </span>
                 </div>
-                <p className="text-xs text-slate-500 leading-relaxed">{lever.detail}</p>
+                <p className="text-xs text-stone-500 leading-relaxed">{lever.detail}</p>
               </div>
             ))}
           </div>

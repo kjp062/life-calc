@@ -14,9 +14,9 @@ import {
 
 // Real return rates (nominal minus ~3% inflation)
 export const RATES = [
-  { key: 'rate5', label: '5%', value: 0.05, color: '#94a3b8' },
-  { key: 'rate6', label: '6%', value: 0.06, color: '#3b82f6' },
-  { key: 'rate7', label: '7%', value: 0.07, color: '#6366f1' },
+  { key: 'rate5', label: '5%', value: 0.05, color: '#a8a29e' },  // stone-400
+  { key: 'rate6', label: '6%', value: 0.06, color: '#16a34a' },  // green-600
+  { key: 'rate7', label: '7%', value: 0.07, color: '#ea580c' },  // orange-600
 ];
 
 export const INFLATION = 0.03;
@@ -202,7 +202,7 @@ export default function Calculator({
   return (
     <div className="space-y-6">
       {/* Inputs */}
-      <div className="bg-white rounded-2xl border border-slate-100 p-8 space-y-6">
+      <div className="bg-stone-50 rounded-2xl border border-stone-200 p-8 space-y-6">
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
           <Field label="Current age">
             <input
@@ -246,7 +246,7 @@ export default function Calculator({
                 placeholder="4"
                 className={`${inputClass} pr-7`}
               />
-              <span className="absolute right-3 top-1/2 -translate-y-1/2 text-slate-400 text-sm pointer-events-none">
+              <span className="absolute right-3 top-1/2 -translate-y-1/2 text-stone-400 text-sm pointer-events-none">
                 %
               </span>
             </div>
@@ -254,8 +254,8 @@ export default function Calculator({
         </div>
 
         {breakpoints.length > 0 && (
-          <div className="space-y-3 pt-4 border-t border-slate-100">
-            <p className="text-xs font-semibold text-slate-400 uppercase tracking-wide">
+          <div className="space-y-3 pt-4 border-t border-stone-200">
+            <p className="text-xs font-semibold text-stone-400 uppercase tracking-wide">
               Salary changes
             </p>
             {breakpoints.map((bp, i) => (
@@ -290,14 +290,14 @@ export default function Calculator({
                       placeholder="3"
                       className={`${inputClass} pr-7`}
                     />
-                    <span className="absolute right-3 top-1/2 -translate-y-1/2 text-slate-400 text-sm pointer-events-none">
+                    <span className="absolute right-3 top-1/2 -translate-y-1/2 text-stone-400 text-sm pointer-events-none">
                       %
                     </span>
                   </div>
                 </Field>
                 <button
                   onClick={() => removeBreakpoint(i)}
-                  className="mb-0.5 text-slate-300 hover:text-slate-500 transition-colors text-xl leading-none"
+                  className="mb-0.5 text-stone-300 hover:text-stone-500 transition-colors text-xl leading-none"
                 >
                   ×
                 </button>
@@ -309,7 +309,7 @@ export default function Calculator({
         <button
           onClick={addBreakpoint}
           disabled={breakpoints.length >= 3}
-          className="text-sm text-emerald-600 hover:text-emerald-700 transition-colors disabled:opacity-30 disabled:cursor-not-allowed"
+          className="text-sm text-green-600 hover:text-green-700 transition-colors disabled:opacity-30 disabled:cursor-not-allowed"
         >
           + Add salary change
         </button>
@@ -332,7 +332,7 @@ export default function Calculator({
 function Field({ label, children }: { label: string; children: React.ReactNode }) {
   return (
     <div className="space-y-1.5">
-      {label && <label className="block text-sm font-medium text-slate-600">{label}</label>}
+      {label && <label className="block text-sm font-medium text-stone-600">{label}</label>}
       {children}
     </div>
   );
@@ -340,7 +340,7 @@ function Field({ label, children }: { label: string; children: React.ReactNode }
 
 function DollarSign() {
   return (
-    <span className="absolute left-3 top-1/2 -translate-y-1/2 text-slate-400 text-sm pointer-events-none">
+    <span className="absolute left-3 top-1/2 -translate-y-1/2 text-stone-400 text-sm pointer-events-none">
       $
     </span>
   );
@@ -350,37 +350,46 @@ function ProjectionCard({
   title,
   subtitle,
   projections,
+  afterTaxMultiplier,
 }: {
   title: string;
   subtitle: string;
   projections: ScenarioResult[];
+  afterTaxMultiplier?: number | null;
 }) {
+  const showAfterTax = afterTaxMultiplier !== null && afterTaxMultiplier !== undefined && afterTaxMultiplier < 1.0;
   return (
-    <div className="bg-white rounded-2xl border border-slate-100 p-8 space-y-5">
+    <div className="bg-white rounded-2xl border border-[#d4c4b0] p-6 space-y-4">
       <div>
-        <h3 className="text-lg font-semibold text-slate-900">{title}</h3>
-        <p className="text-sm text-slate-400">{subtitle}</p>
+        <h3 className="text-lg font-semibold text-stone-900">{title}</h3>
+        <p className="text-sm text-stone-400">{subtitle}</p>
       </div>
       <div className="space-y-3">
         {projections.map((p) => {
           const isAnchor = p.key === 'rate6';
+          const afterTaxAmount = showAfterTax ? p.amount * afterTaxMultiplier! : null;
           return (
             <div
               key={p.key}
-              className={`flex items-center justify-between rounded-lg ${
-                isAnchor ? 'bg-slate-50 px-3 py-2 -mx-3' : 'py-0.5'
-              }`}
+              className={`rounded-lg ${isAnchor ? 'bg-[#faf6ef] px-3 py-2 -mx-3' : 'py-0.5'}`}
             >
-              <div className="flex items-center gap-2">
-                <span className="w-2 h-2 rounded-full flex-shrink-0" style={{ backgroundColor: p.color }} />
-                <span className={`text-sm ${isAnchor ? 'text-slate-700 font-medium' : 'text-slate-500'}`}>
-                  {p.label} return
+              <div className="flex items-center justify-between">
+                <div className="flex items-center gap-2">
+                  <span className="w-2 h-2 rounded-full flex-shrink-0" style={{ backgroundColor: p.color }} />
+                  <span className={`text-sm ${isAnchor ? 'text-stone-700 font-medium' : 'text-stone-500'}`}>
+                    {p.label} return
+                  </span>
+                  {isAnchor && <span className="text-xs text-stone-400">· historical avg</span>}
+                </div>
+                <span className={`font-semibold text-stone-900 ${isAnchor ? 'text-lg' : 'text-base'}`}>
+                  {formatDollars(p.amount)}
                 </span>
-                {isAnchor && <span className="text-xs text-slate-400">· historical avg</span>}
               </div>
-              <span className={`font-semibold text-slate-900 ${isAnchor ? 'text-lg' : 'text-base'}`}>
-                {formatDollars(p.amount)}
-              </span>
+              {afterTaxAmount !== null && (
+                <p className="text-xs text-stone-500 text-right mt-0.5">
+                  ~{formatDollars(afterTaxAmount)} after tax
+                </p>
+              )}
             </div>
           );
         })}
@@ -391,64 +400,73 @@ function ProjectionCard({
 
 function EmptyState({ message }: { message: string }) {
   return (
-    <div className="bg-white rounded-2xl border border-slate-100 p-12 flex items-center justify-center">
-      <p className="text-sm text-slate-400 text-center max-w-xs">{message}</p>
+    <div className="bg-white rounded-2xl border border-[#d4c4b0] p-10 flex items-center justify-center">
+      <p className="text-sm text-stone-400 text-center max-w-xs">{message}</p>
     </div>
   );
 }
 
 function SkippedCard({ message }: { message: string }) {
   return (
-    <div className="bg-slate-50 rounded-2xl border border-slate-100 p-8 flex items-center justify-center text-slate-400 text-sm">
+    <div className="bg-[#faf6ef] rounded-2xl border border-[#d4c4b0] p-6 flex items-center justify-center text-stone-400 text-sm">
       {message}
     </div>
   );
 }
 
 const inputClass =
-  'w-full rounded-lg border border-slate-200 px-4 py-2.5 text-slate-900 placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:border-transparent text-sm';
+  'w-full rounded-lg border border-[#d4c4b0] bg-[#faf6ef] px-4 py-2.5 text-stone-900 placeholder-stone-400 focus:outline-none focus:ring-2 focus:ring-green-600 focus:border-transparent text-sm';
 
 export function ProjectionOutputs({
   chartData,
   projections59,
   projections65,
   age,
+  targetRetAge = 65,
+  afterTaxMultiplier,
 }: {
   chartData: Record<string, number>[];
   projections59: ScenarioResult[] | null;
   projections65: ScenarioResult[] | null;
   age: number;
+  targetRetAge?: number;
+  afterTaxMultiplier?: number | null;
 }) {
   return (
     <>
-      <div className="bg-white rounded-2xl border border-slate-100 p-8">
+      <div className="bg-white rounded-2xl border border-[#d4c4b0] p-8">
         <div className="flex items-center justify-between mb-1">
-          <h3 className="text-sm font-semibold text-slate-700">Projected portfolio value</h3>
-          <div className="flex items-center gap-5">
-            {RATES.map((r) => (
-              <div key={r.key} className="flex items-center gap-1.5">
-                <span className="w-3 h-0.5 rounded-full inline-block" style={{ backgroundColor: r.color }} />
-                <span className="text-xs text-slate-400">{r.label}</span>
-              </div>
-            ))}
+          <h3 className="text-sm font-semibold text-stone-700">Projected portfolio value</h3>
+          <div className="flex items-center gap-3">
+            {afterTaxMultiplier !== null && afterTaxMultiplier !== undefined && afterTaxMultiplier < 1 && (
+              <span className="text-xs text-stone-500 bg-[#e8d9c5] px-2 py-0.5 rounded-full">After-tax view</span>
+            )}
+            <div className="flex items-center gap-5">
+              {RATES.map((r) => (
+                <div key={r.key} className="flex items-center gap-1.5">
+                  <span className="w-3 h-0.5 rounded-full inline-block" style={{ backgroundColor: r.color }} />
+                  <span className="text-xs text-stone-400">{r.label}</span>
+                </div>
+              ))}
+            </div>
           </div>
         </div>
-        <p className="text-xs text-slate-400 mb-6">
+        <p className="text-xs text-stone-400 mb-6">
           In today&apos;s dollars. Three real return scenarios — 6% reflects historical averages after inflation.
         </p>
         <ResponsiveContainer width="100%" height={280}>
           <LineChart data={chartData} margin={{ top: 4, right: 8, bottom: 4, left: 8 }}>
-            <CartesianGrid strokeDasharray="3 3" stroke="#f8fafc" />
+            <CartesianGrid strokeDasharray="3 3" stroke="#e8d9c5" />
             <XAxis
               dataKey="age"
-              tick={{ fontSize: 12, fill: '#94a3b8' }}
+              tick={{ fontSize: 12, fill: '#a8a29e' }}
               tickLine={false}
               axisLine={false}
-              label={{ value: 'Age', position: 'insideBottomRight', offset: -4, fontSize: 11, fill: '#cbd5e1' }}
+              label={{ value: 'Age', position: 'insideBottomRight', offset: -4, fontSize: 11, fill: '#d6d3d1' }}
             />
             <YAxis
               tickFormatter={formatAxisDollars}
-              tick={{ fontSize: 12, fill: '#94a3b8' }}
+              tick={{ fontSize: 12, fill: '#a8a29e' }}
               tickLine={false}
               axisLine={false}
               width={64}
@@ -459,16 +477,16 @@ export function ProjectionOutputs({
                 return [formatDollars(value), `${rate?.label} return`];
               }}
               labelFormatter={(label) => `Age ${label}`}
-              contentStyle={{ borderRadius: '12px', border: '1px solid #e2e8f0', fontSize: 13 }}
+              contentStyle={{ borderRadius: '12px', border: '1px solid #d4c4b0', fontSize: 13 }}
             />
-            {age < 59 && (
-              <ReferenceLine x={59} stroke="#e2e8f0" strokeDasharray="4 4"
-                label={{ value: '59', position: 'top', fontSize: 11, fill: '#94a3b8' }}
+            {age < 59 && targetRetAge > 59 && (
+              <ReferenceLine x={59} stroke="#d4c4b0" strokeDasharray="4 4"
+                label={{ value: '59', position: 'top', fontSize: 11, fill: '#a8a29e' }}
               />
             )}
-            {age < 65 && (
-              <ReferenceLine x={65} stroke="#e2e8f0" strokeDasharray="4 4"
-                label={{ value: '65', position: 'top', fontSize: 11, fill: '#94a3b8' }}
+            {age < targetRetAge && (
+              <ReferenceLine x={targetRetAge} stroke="#d4c4b0" strokeDasharray="4 4"
+                label={{ value: String(targetRetAge), position: 'top', fontSize: 11, fill: '#a8a29e' }}
               />
             )}
             {RATES.map((rate) => (
@@ -492,22 +510,24 @@ export function ProjectionOutputs({
             title="At age 59"
             subtitle={`${59 - age} years away · early retirement`}
             projections={projections59}
+            afterTaxMultiplier={afterTaxMultiplier}
           />
         ) : (
           <SkippedCard message="Already past age 59" />
         )}
         {projections65 ? (
           <ProjectionCard
-            title="At age 65"
-            subtitle={`${65 - age} years away · traditional retirement`}
+            title={`At age ${targetRetAge}`}
+            subtitle={`${targetRetAge - age} years away · ${targetRetAge === 65 ? 'traditional retirement' : 'your target'}`}
             projections={projections65}
+            afterTaxMultiplier={afterTaxMultiplier}
           />
         ) : (
-          <SkippedCard message="Already past age 65" />
+          <SkippedCard message={`Already past age ${targetRetAge}`} />
         )}
       </div>
 
-      <p className="text-xs text-slate-400 text-center pb-4">
+      <p className="text-xs text-stone-400 text-center pb-4">
         All values in today&apos;s dollars. Real returns of 5%, 6%, and 7% (equivalent to ~8–10% nominal after 3% inflation).
       </p>
     </>

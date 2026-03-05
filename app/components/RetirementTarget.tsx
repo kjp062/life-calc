@@ -117,20 +117,20 @@ export default function RetirementTarget({
 
   return (
     <div className="space-y-6">
-      <div className="bg-white rounded-2xl border border-slate-100 p-8 space-y-7">
+      <div className="bg-stone-50 rounded-2xl border border-stone-200 p-8 space-y-7">
 
         {/* Monthly spending input */}
         <div className="space-y-1.5">
-          <label className="block text-sm font-medium text-slate-600">
+          <label className="block text-sm font-medium text-stone-600">
             Monthly spending
           </label>
           {benchmark && (
-            <p className="text-xs text-slate-400">
+            <p className="text-xs text-stone-400">
               People aged {benchmark.bracket} typically spend {formatDollars(benchmark.monthly)}/month · BLS 2022
             </p>
           )}
           <div className="relative max-w-xs mt-1">
-            <span className="absolute left-3 top-1/2 -translate-y-1/2 text-slate-400 text-sm pointer-events-none">
+            <span className="absolute left-3 top-1/2 -translate-y-1/2 text-stone-400 text-sm pointer-events-none">
               $
             </span>
             <input
@@ -138,7 +138,7 @@ export default function RetirementTarget({
               value={monthlySpending}
               onChange={(e) => setMonthlySpending(e.target.value)}
               placeholder={benchmark ? String(benchmark.monthly) : '5000'}
-              className="w-full rounded-lg border border-slate-200 pl-8 pr-4 py-2.5 text-slate-900 placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:border-transparent text-sm"
+              className="w-full rounded-lg border border-stone-300 bg-stone-100 pl-8 pr-4 py-2.5 text-stone-900 placeholder-stone-400 focus:outline-none focus:ring-2 focus:ring-green-600 focus:border-transparent text-sm"
             />
           </div>
         </div>
@@ -146,10 +146,10 @@ export default function RetirementTarget({
         {/* Lifestyle inflation selector */}
         <div className="space-y-3">
           <div>
-            <label className="block text-sm font-medium text-slate-600">
+            <label className="block text-sm font-medium text-stone-600">
               Lifestyle inflation
             </label>
-            <p className="text-xs text-slate-400 mt-0.5">
+            <p className="text-xs text-stone-400 mt-0.5">
               How much your real spending grows each year above inflation.
               {benchmark ? ' Pre-selected based on your age.' : ''}
             </p>
@@ -165,15 +165,15 @@ export default function RetirementTarget({
                 }}
                 className={`rounded-xl border p-4 text-left transition-colors ${
                   !useCustom && presetIndex === i
-                    ? 'border-emerald-500 bg-emerald-50'
-                    : 'border-slate-200 hover:border-slate-300 bg-white'
+                    ? 'border-green-600 bg-green-50'
+                    : 'border-stone-200 hover:border-stone-300 bg-stone-50'
                 }`}
               >
-                <div className="text-sm font-semibold text-slate-900">{preset.label}</div>
-                <div className="text-xs font-medium text-slate-400 mt-0.5">
+                <div className="text-sm font-semibold text-stone-900">{preset.label}</div>
+                <div className="text-xs font-medium text-stone-400 mt-0.5">
                   +{preset.rate * 100}% / yr real
                 </div>
-                <div className="text-xs text-slate-500 mt-1.5 leading-snug">
+                <div className="text-xs text-stone-500 mt-1.5 leading-snug">
                   {preset.description}
                 </div>
               </button>
@@ -185,8 +185,8 @@ export default function RetirementTarget({
               onClick={() => { setUseCustom(true); setUserPickedPreset(true); }}
               className={`text-sm px-3 py-1.5 rounded-lg border transition-colors ${
                 useCustom
-                  ? 'border-emerald-500 bg-emerald-50 text-emerald-700'
-                  : 'border-slate-200 text-slate-500 hover:border-slate-300'
+                  ? 'border-green-600 bg-green-50 text-green-700'
+                  : 'border-stone-200 text-stone-500 hover:border-stone-300'
               }`}
             >
               Custom
@@ -201,15 +201,15 @@ export default function RetirementTarget({
                   step="0.1"
                   min="0"
                   max="20"
-                  className="w-24 rounded-lg border border-slate-200 pl-3 pr-7 py-1.5 text-sm text-slate-900 placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-emerald-500"
+                  className="w-24 rounded-lg border border-stone-300 bg-stone-100 pl-3 pr-7 py-1.5 text-sm text-stone-900 placeholder-stone-400 focus:outline-none focus:ring-2 focus:ring-green-600"
                 />
-                <span className="absolute right-3 top-1/2 -translate-y-1/2 text-slate-400 text-sm">%</span>
+                <span className="absolute right-3 top-1/2 -translate-y-1/2 text-stone-400 text-sm">%</span>
               </div>
             )}
           </div>
 
           {isValid && (
-            <p className="text-xs text-slate-400">
+            <p className="text-xs text-stone-400">
               Your spending grows at {(lifestyleRate * 100).toFixed(1)}% per year in real terms (above 3% general inflation).
             </p>
           )}
@@ -230,39 +230,75 @@ function TargetCard({
   subtitle,
   target,
   futureReal,
+  ssResult,
+  ssClaimAge,
+  retireAge,
 }: {
   title: string;
   subtitle: string;
   target: number;
   futureReal: number;
+  ssResult?: { target: number; ssMonthly: number } | null;
+  ssClaimAge?: 62 | 67 | 70;
+  retireAge?: number;
 }) {
+  const bridgeYears =
+    ssResult && ssClaimAge && retireAge && ssClaimAge > retireAge
+      ? ssClaimAge - retireAge
+      : null;
   return (
-    <div className="bg-white rounded-2xl border border-slate-100 p-8 space-y-3">
+    <div className="bg-white rounded-2xl border border-[#d4c4b0] border-t-2 border-t-green-600 p-6 space-y-3">
       <div>
-        <h3 className="text-lg font-semibold text-slate-900">{title}</h3>
-        <p className="text-sm text-slate-400">{subtitle}</p>
+        <h3 className="text-lg font-semibold text-stone-900">{title}</h3>
+        <p className="text-sm text-stone-400">{subtitle}</p>
       </div>
-      <div className="text-3xl font-bold tracking-tight text-slate-900">
-        {formatDollars(target)}
-      </div>
-      <p className="text-xs text-slate-400">
+      {ssResult ? (
+        <div className="space-y-1.5">
+          <div className="flex items-baseline justify-between">
+            <span className="text-xs text-stone-400">Without SS</span>
+            <span className="text-xl font-semibold text-stone-400">{formatDollars(target)}</span>
+          </div>
+          <div className="flex items-center justify-between gap-2">
+            <span className="text-xs text-stone-400">With SS</span>
+            <div className="flex items-center gap-2">
+              <span className="text-xs font-medium text-green-700 bg-green-100 px-2 py-0.5 rounded-full whitespace-nowrap">
+                SS reduces target
+              </span>
+              <span className="text-2xl font-bold text-green-700">{formatDollars(ssResult.target)}</span>
+            </div>
+          </div>
+          <p className="text-xs font-medium text-green-600">
+            ↓ {formatDollars(target - ssResult.target)} less needed with SS
+          </p>
+        </div>
+      ) : (
+        <div className="text-3xl font-bold tracking-tight text-stone-900">
+          {formatDollars(target)}
+        </div>
+      )}
+      <p className="text-xs text-stone-400">
         Covers {formatDollars(futureReal)}/month in today&apos;s dollars
       </p>
+      {bridgeYears !== null && (
+        <p className="text-xs text-orange-600">
+          SS begins at {ssClaimAge} — budget for a {bridgeYears}-year bridge.
+        </p>
+      )}
     </div>
   );
 }
 
 function EmptyState({ message }: { message: string }) {
   return (
-    <div className="bg-white rounded-2xl border border-slate-100 p-12 flex items-center justify-center">
-      <p className="text-sm text-slate-400 text-center max-w-xs">{message}</p>
+    <div className="bg-white rounded-2xl border border-[#d4c4b0] p-10 flex items-center justify-center">
+      <p className="text-sm text-stone-400 text-center max-w-xs">{message}</p>
     </div>
   );
 }
 
 function SkippedCard({ message }: { message: string }) {
   return (
-    <div className="bg-slate-50 rounded-2xl border border-slate-100 p-8 flex items-center justify-center text-slate-400 text-sm">
+    <div className="bg-[#faf6ef] rounded-2xl border border-[#d4c4b0] p-6 flex items-center justify-center text-stone-400 text-sm">
       {message}
     </div>
   );
@@ -274,10 +310,18 @@ export function TargetOutputs({
   result59,
   result65,
   age,
+  targetRetAge = 65,
+  ssResult59,
+  ssResult65,
+  ssClaimAge,
 }: {
   result59: TargetDetail | null;
   result65: TargetDetail | null;
   age: number;
+  targetRetAge?: number;
+  ssResult59?: { target: number; ssMonthly: number } | null;
+  ssResult65?: { target: number; ssMonthly: number } | null;
+  ssClaimAge?: 62 | 67 | 70;
 }) {
   return (
     <>
@@ -288,22 +332,28 @@ export function TargetOutputs({
             subtitle={`${59 - age} years away · early retirement`}
             target={result59.target}
             futureReal={result59.futureReal}
+            ssResult={ssResult59}
+            ssClaimAge={ssClaimAge}
+            retireAge={59}
           />
         ) : (
           <SkippedCard message="Already past age 59" />
         )}
         {result65 ? (
           <TargetCard
-            title="Target at age 65"
-            subtitle={`${65 - age} years away · traditional retirement`}
+            title={`Target at age ${targetRetAge}`}
+            subtitle={`${targetRetAge - age} years away · ${targetRetAge === 65 ? 'traditional retirement' : 'your target'}`}
             target={result65.target}
             futureReal={result65.futureReal}
+            ssResult={ssResult65}
+            ssClaimAge={ssClaimAge}
+            retireAge={targetRetAge}
           />
         ) : (
-          <SkippedCard message="Already past age 65" />
+          <SkippedCard message={`Already past age ${targetRetAge}`} />
         )}
       </div>
-      <p className="text-xs text-slate-400 text-center pb-4">
+      <p className="text-xs text-stone-500 text-center pb-4">
         Target is 25× projected annual spending (4% withdrawal rate). All values in today&apos;s dollars.
       </p>
     </>
